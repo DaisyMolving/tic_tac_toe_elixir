@@ -1,8 +1,8 @@
 defmodule TicTacToeTest do
   use ExUnit.Case
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "a board has 9 spaces" do
+    assert Enum.count(TicTacToe.Board.create_new_board) == 9
   end
 
 end
