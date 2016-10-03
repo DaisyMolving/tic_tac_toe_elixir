@@ -7,13 +7,14 @@ defmodule TicTacToeTest.Player do
     assert new_player.marker == "x"
   end
 
-  test "player has a name that is capitalized" do
-    assert TicTacToe.Player.name("Daisy") == "Daisy"
-    assert TicTacToe.Player.name("daisy") == "Daisy"
+  test "sets a name that is capitalized" do
+    new_player = TicTacToe.Player.name("daisy")
+    assert new_player.name == "Daisy"
   end
 
-  test "player has a marker" do
-    assert TicTacToe.Player.marker("x") == "x"
+  test "sets a marker" do
+    new_player = TicTacToe.Player.marker("o")
+    assert new_player.marker == "o"
   end
 
 end
