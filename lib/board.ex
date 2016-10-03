@@ -7,13 +7,9 @@ defmodule TicTacToe.Board do
     ]
   end
 
-  def win?(current_board) do
-    row_win(current_board)
-  end
-
-  def row_win(current_board) do
-    Enum.any?(rows(current_board), fn(row) ->
-      Enum.uniq(row)
+  def win?(sequences) do
+    Enum.any?(sequences, fn(sequence) ->
+      Enum.uniq(sequence)
       |> Enum.count == 1
     end)
   end
@@ -22,4 +18,17 @@ defmodule TicTacToe.Board do
     Enum.chunk(current_board, 3)
   end
 
+  def columns(current_board) do
+    [a1, a2, a3, 
+     b1, b2, b3, 
+     c1, c2, c3] = current_board
+    [[a1, b1, c1], [a2, b2, c2], [a3, b3, c3]]
+  end
+
+  def diagonals(current_board) do
+    [a1, _, a3, 
+     _, b2, _, 
+     c1, _, c3] = current_board
+    [[a1, b2, c3], [a3, b2, c1]]
+  end
 end
