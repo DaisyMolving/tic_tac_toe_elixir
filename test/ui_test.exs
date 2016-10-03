@@ -6,6 +6,18 @@ defmodule TicTacToeTest.UI do
 
   end
 
+  test "asks each player to set their name" do
+    assert TicTacToe.UI.request_set_player_name("1") =~ "Player 1, please input your name: "
+  end
+
+  test "asks each player to set their marker" do
+    assert TicTacToe.UI.request_set_player_marker("Barry") =~ "Thank you Barry, now please choose a marker"
+  end
+
+  test "returns invalid input message for invalid marker" do
+    assert TicTacToe.UI.invalid_marker_message("Barry") =~ "Barry, that is not a valid marker. Please choose a single symbol that is NOT a number: "
+  end
+
   test "displays current board" do
     assert TicTacToe.UI.display_board(["1", "2", "3",
       "4", "5", "6",
