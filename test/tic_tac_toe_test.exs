@@ -11,4 +11,12 @@ defmodule TicTacToeTest do
     end) == true
   end
 
+  test "a row of all the same is recognised as a win" do
+    assert TicTacToe.Board.win?( 
+      [ "x", "x", "x",
+        "4", "5", "6",
+        "7", "8", "9",
+      ]) == true
+  end
+
 end
