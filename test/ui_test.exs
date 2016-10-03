@@ -6,4 +6,10 @@ defmodule TicTacToeTest.UI do
 
   end
 
+  test "displays current board" do
+    assert TicTacToe.UI.display_board(["1", "2", "3",
+      "4", "5", "6",
+      "7", "8", "9"]) == "1 2 3\n4 5 6\n7 8 9"
+  end
+
 end
