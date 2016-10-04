@@ -16,12 +16,20 @@ defmodule TicTacToe.UI do
     "Sorry #{player_name}, that is not a valid marker. Please choose a single symbol that is NOT a number: "
   end
 
+  def turn_message(player_name) do
+    "It's #{player_name}'s turn, input the number of the position that you would like to mark: "
+  end
+
   def display_board(current_board) do
     Enum.chunk(current_board, 3)
     |> Enum.map(fn(row) ->
       Enum.join(row, " ")
     end)
     |> Enum.join("\n")
+  end
+
+  def invalid_input do
+    "That is an invalid input, please try again: "
   end
 
 end

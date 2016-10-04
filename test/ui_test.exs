@@ -18,10 +18,18 @@ defmodule TicTacToeTest.UI do
     assert TicTacToe.UI.invalid_marker_message("Barry") =~ "Barry, that is not a valid marker. Please choose a single symbol that is NOT a number: "
   end
 
+  test "tells the users whose turn it is" do
+    assert TicTacToe.UI.turn_message("Barry") =~ "It's Barry's turn, input the number of the position that you would like to mark: "
+  end
+
   test "displays current board" do
     assert TicTacToe.UI.display_board(["1", "2", "3",
       "4", "5", "6",
       "7", "8", "9"]) == "1 2 3\n4 5 6\n7 8 9"
+  end
+
+  test "returns invalid message for invalid input" do
+    assert TicTacToe.UI.invalid_input == "That is an invalid input, please try again: "
   end
 
 end
