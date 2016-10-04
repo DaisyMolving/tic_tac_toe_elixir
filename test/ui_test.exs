@@ -29,7 +29,14 @@ defmodule TicTacToeTest.UI do
   end
 
   test "returns invalid message for invalid input" do
-    assert TicTacToe.UI.invalid_input == "That is an invalid input, please try again: "
+    assert TicTacToe.UI.invalid_input =~ "That is an invalid input, please try again: "
   end
 
+  test "returns message for draw" do
+    assert TicTacToe.UI.draw_message =~ "It's a draw!"
+  end
+
+  test "congratulates winner" do
+    assert TicTacToe.UI.congratulate_winner("Barry") =~ "Barry won! Congratulations!"
+  end
 end

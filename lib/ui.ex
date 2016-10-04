@@ -32,4 +32,11 @@ defmodule TicTacToe.UI do
     "That is an invalid input, please try again: "
   end
 
+  def draw_message do
+    "It's a draw!"
+  end
+
+  def congratulate_winner(winning_player) do
+    "#{winning_player} won! Congratulations!"
+  end
 end
