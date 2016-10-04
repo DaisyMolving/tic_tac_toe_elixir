@@ -1,4 +1,4 @@
-defmodule TicTacToe.UI do
+defmodule TicTacToe.Display do
   
   def welcome_introduction do
     get_stripped_input("Welcome to TicTacToe! This is a two player strategy game. Press q to quit, or any other key to continue: ")

@@ -1,4 +1,4 @@
-defmodule TicTacToeTest.UI do
+defmodule TicTacToeTest.Display do
   use ExUnit.Case
   import ExUnit.CaptureIO
   
