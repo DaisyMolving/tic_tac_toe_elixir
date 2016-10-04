@@ -1,6 +1,6 @@
 defmodule TicTacToe.PrinterReceiver do
 
-  def print_message(output_message) do
+  def print(output_message) do
     IO.puts(output_message)
   end
 

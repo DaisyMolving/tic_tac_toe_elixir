@@ -3,11 +3,14 @@ defmodule TicTacToeTest.UI do
   
   test "greets users and introduces game" do
     assert TicTacToe.UI.welcome_introduction =~ "Welcome to TicTacToe! This is a two player strategy game"
-
   end
 
   test "asks each player to set their name" do
     assert TicTacToe.UI.request_set_player_name("1") =~ "Player 1, please input your name: "
+  end
+
+  test "returns invalid input message for invalid player name" do
+    assert TicTacToe.UI.invalid_name("1") =~ "1, that is not a valid player name"
   end
 
   test "asks each player to set their marker" do
@@ -15,11 +18,15 @@ defmodule TicTacToeTest.UI do
   end
 
   test "returns invalid input message for invalid marker" do
-    assert TicTacToe.UI.invalid_marker_message("Barry") =~ "Barry, that is not a valid marker. Please choose a single symbol that is NOT a number: "
+    assert TicTacToe.UI.invalid_marker("Barry") =~ "Barry, that is not a valid marker"
   end
 
   test "tells the users whose turn it is" do
     assert TicTacToe.UI.turn_message("Barry") =~ "It's Barry's turn, input the number of the position that you would like to mark: "
+  end
+
+  test "returns invalid input message for invalid turn" do
+    assert TicTacToe.UI.invalid_turn("Barry") =~ "Barry, that is not a valid turn"
   end
 
   test "displays current board" do

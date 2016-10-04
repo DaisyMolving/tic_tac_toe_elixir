@@ -4,7 +4,7 @@ defmodule TicTacToeTest.PrinterReceiver do
 
   test "prints to the command line" do
     assert capture_io(fn ->
-      TicTacToe.PrinterReceiver.print_message("hello")
+      TicTacToe.PrinterReceiver.print("hello")
     end) =~ "hello"
   end
 
