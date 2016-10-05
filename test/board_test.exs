@@ -56,4 +56,8 @@ defmodule TicTacToeTest.Board do
      "7", "8", "9"]
   end
 
+  test "board does not mark a cell that is not available" do
+    assert TicTacToe.Board.mark_if_available(["o", "2", "3", "4", "5", "6", "7", "8", "9"], "1", "x") == :not_available
+  end
+
 end
