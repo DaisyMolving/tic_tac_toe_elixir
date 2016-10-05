@@ -7,6 +7,14 @@ defmodule TicTacToe.Board do
     ]
   end
 
+  def mark_cell(current_board, cell_number, player_marker) do
+    List.replace_at(current_board, get_cell_index(cell_number), player_marker)
+  end
+
+  defp get_cell_index(cell_number) do
+    String.to_integer(cell_number) - 1
+  end
+
   def win?(sequences) do
     Enum.any?(sequences, fn(sequence) ->
       Enum.uniq(sequence)

@@ -50,4 +50,10 @@ defmodule TicTacToeTest.Board do
        "7", "8", "o"])) == false
   end
 
+  test "board marks a cell with given symbol" do
+    assert TicTacToe.Board.mark_cell(["1", "2", "3", "4", "5", "6", "7", "8", "9"], "1", "x") == ["x", "2", "3",
+     "4", "5", "6",
+     "7", "8", "9"]
+  end
+
 end
