@@ -47,7 +47,13 @@ defmodule TicTacToeTest.Display do
   test "asks each player to set their marker" do
     assert capture_io("x", fn ->
       TicTacToe.Display.request_set_player_marker("Barry") 
-    end) =~ "Thank you Barry, now please choose a marker"
+    end) =~ "Barry, please choose a marker"
+  end
+
+  test "asks player to set marker and continuously prints invalid message until name is valid" do
+    assert capture_io("1\n$w\nx", fn ->
+      TicTacToe.Display.ask_for_marker("Gary")
+    end) =~ "Gary, please choose a marker of any single symbol that is not a number. Sorry, that is not a valid input. Gary, please choose a marker of any single symbol that is not a number. Sorry, that is not a valid input."
   end
 
   test "returns invalid input message for invalid marker" do

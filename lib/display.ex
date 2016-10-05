@@ -31,8 +31,18 @@ defmodule TicTacToe.Display do
     get_stripped_input("Player #{player_number}, please input your name: ")
   end
 
+  def ask_for_marker(player_name) do
+    cond do
+      String.match?(request_set_player_marker(player_name), ~r/^(\D)$/) ->
+        :set_marker
+      :else ->
+        invalid_input
+        ask_for_marker(player_name)
+    end
+  end
+
   def request_set_player_marker(player_name) do
-    get_stripped_input("Thank you #{player_name}, now please choose a marker (this can be any single symbol that is not a number): ")
+    get_stripped_input("#{player_name}, please choose a marker of any single symbol that is not a number. ")
   end
   
   def invalid_input do
