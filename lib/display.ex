@@ -1,4 +1,13 @@
 defmodule TicTacToe.Display do
+
+  def ask_to_play_or_end do
+    cond do
+      String.match?(welcome_introduction, ~r/([^q, Q])/) ->
+        :continue
+      :else ->
+        farewell_message
+    end
+  end
   
   def welcome_introduction do
     get_stripped_input("Welcome to TicTacToe! This is a two player strategy game. Press q to quit, or any other key to continue: ")
@@ -6,6 +15,16 @@ defmodule TicTacToe.Display do
 
   def farewell_message do
     IO.puts("Goodbye")
+  end
+
+  def ask_for_name(player_number) do
+    cond do
+      String.match?(request_set_player_name(player_number), ~r/[a-z, A-Z]+/) ->
+        :set_name
+      :else ->
+        invalid_input
+        ask_for_name(player_number)
+      end
   end
 
   def request_set_player_name(player_number) do
@@ -16,8 +35,8 @@ defmodule TicTacToe.Display do
     get_stripped_input("Thank you #{player_name}, now please choose a marker (this can be any single symbol that is not a number): ")
   end
   
-  def invalid_name(player_number) do
-    get_stripped_input("Sorry player #{player_number}, that is not a valid player name. Please choose a single word with no numbers: ")
+  def invalid_input do
+    IO.write("Sorry, that is not a valid input. ")
   end
 
   def invalid_marker(player_name) do
