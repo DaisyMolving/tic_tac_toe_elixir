@@ -24,30 +24,30 @@ defmodule TicTacToeTest.Board do
   end
 
   test "a row of all the same is recognised as a win?" do
-    assert TicTacToe.Board.win?(TicTacToe.Board.rows(["x", "x", "x", 
+    assert TicTacToe.Board.win?(["x", "x", "x", 
        "4", "5", "6", 
-       "7", "8", "9"])) == true
-    assert TicTacToe.Board.win?(TicTacToe.Board.rows(["x", "o", "x", 
+       "7", "8", "9"]) == true
+    assert TicTacToe.Board.win?(["x", "o", "x", 
        "4", "5", "6", 
-       "7", "8", "9"])) == false
+       "7", "8", "9"]) == false
   end
 
   test "a column of all the same is recognised as a win?" do
-    assert TicTacToe.Board.win?(TicTacToe.Board.columns(["x", "2", "3", 
+    assert TicTacToe.Board.win?(["x", "2", "3", 
        "x", "5", "6", 
-       "x", "8", "9"])) == true
-    assert TicTacToe.Board.win?(TicTacToe.Board.columns(["x", "2", "3", 
+       "x", "8", "9"]) == true
+    assert TicTacToe.Board.win?(["x", "2", "3", 
        "o", "5", "6", 
-       "x", "8", "9"])) == false
+       "x", "8", "9"]) == false
   end
 
   test "a diagonal of all the same is recognised as a win?" do
-    assert TicTacToe.Board.win?(TicTacToe.Board.diagonals(["x", "2", "3", 
+    assert TicTacToe.Board.win?(["x", "2", "3", 
        "4", "x", "6", 
-       "7", "8", "x"])) == true
-    assert TicTacToe.Board.win?(TicTacToe.Board.diagonals(["x", "2", "3", 
+       "7", "8", "x"]) == true
+    assert TicTacToe.Board.win?(["x", "2", "3", 
        "4", "x", "6", 
-       "7", "8", "o"])) == false
+       "7", "8", "o"]) == false
   end
 
   test "board marks a cell with given symbol" do

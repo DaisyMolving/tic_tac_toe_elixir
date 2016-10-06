@@ -9,7 +9,7 @@ defmodule TicTacToeTest.Display do
     assert capture_io("Q", fn ->
       TicTacToe.Display.ask_to_play_or_end
     end) =~ "Welcome to TicTacToe! To play, press any key to continue, or q to quit: Goodbye"
-    assert capture_io("o", fn ->
+    assert capture_io("go", fn ->
       TicTacToe.Display.ask_to_play_or_end
     end) =~ "Welcome to TicTacToe! To play, press any key to continue, or q to quit:"
   end

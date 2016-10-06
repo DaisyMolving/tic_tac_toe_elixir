@@ -13,7 +13,7 @@ defmodule TicTacToe.Board do
 
   def available_cell?(current_board, cell_number) do
     Enum.at(current_board, get_cell_index(cell_number)) 
-    |> String.match?(~r/[1 - 9]/)
+    |> String.match?(~r/[1-9]/)
   end
 
   def mark_if_available(current_board, cell_number, player_number) do
@@ -29,11 +29,18 @@ defmodule TicTacToe.Board do
     String.to_integer(cell_number) - 1
   end
 
-  def win?(sequences) do
-    Enum.any?(sequences, fn(sequence) ->
-      Enum.uniq(sequence)
-      |> Enum.count == 1
+  def win?(current_board) do
+    sequence_types = collect_sequences(current_board)
+    Enum.any?(sequence_types, fn(sequences) ->
+      Enum.any?(sequences, fn(sequence) ->
+        Enum.uniq(sequence)
+        |> Enum.count == 1
+      end)
     end)
+  end
+
+  def collect_sequences(current_board) do
+    [rows(current_board), columns(current_board), diagonals(current_board)]
   end
 
   def rows(current_board) do

@@ -10,9 +10,10 @@ defmodule TicTacToe.Display do
   end
   
   def ask_for_name(player_number) do
+    input = request_set_player_name(player_number)
     cond do
-      String.match?(request_set_player_name(player_number), ~r/[a-z, A-Z]+/) ->
-        :set_name
+      String.match?(input, ~r/[a-z, A-Z]+/) ->
+        input
       :else ->
         invalid_input
         ask_for_name(player_number)
@@ -30,9 +31,10 @@ defmodule TicTacToe.Display do
   end
 
   def ask_for_turn(player_name) do
+    input = request_turn(player_name)
     cond do
-      String.match?(request_turn(player_name), ~r/[1 - 9]/) ->
-        :mark_board
+      String.match?(input, ~r/[1-9]/) ->
+        input
       :else ->
         invalid_input
         ask_for_turn(player_name)
