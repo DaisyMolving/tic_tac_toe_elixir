@@ -32,10 +32,13 @@ defmodule TicTacToe.Game do
     mark_input = display.ask_for_turn(player_1.name)
     cond do
       board.available_cell?(current_board, mark_input) ->
-        current_board = board.mark_cell(current_board, mark_input, player_1.marker)
+        look_for_winner(player_1, player_2, display, board, board.mark_cell(current_board, mark_input, player_1.marker))
       :else ->
         player_take_turn(player_1, player_2, display, board, current_board)
       end
+  end
+
+  def look_for_winner(player_1, player_2, display, board, current_board) do
     cond do
       board.win?(current_board) ->
         display.congratulate_winner(player_1.name)
