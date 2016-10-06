@@ -42,8 +42,8 @@ defmodule TicTacToe.Game do
     cond do
       board.win?(current_board) ->
         display.congratulate_winner(player_1.name)
-      # board.draw?(current_board) ->
-      #   display.draw_message
+      board.draw?(current_board) ->
+        display.draw_message
       :else ->
         player_take_turn(player_2, player_1, display, board, current_board)
     end
