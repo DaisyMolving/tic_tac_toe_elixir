@@ -39,6 +39,12 @@ defmodule TicTacToe.Board do
     end)
   end
 
+  def draw?(current_board) do
+    sequence_types = collect_sequences(current_board)
+    Enum.uniq(List.flatten(sequence_types))
+    |> Enum.count == 2
+  end
+
   def collect_sequences(current_board) do
     [rows(current_board), columns(current_board), diagonals(current_board)]
   end

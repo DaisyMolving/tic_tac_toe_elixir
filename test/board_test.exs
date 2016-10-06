@@ -49,6 +49,15 @@ defmodule TicTacToeTest.Board do
        "4", "x", "6", 
        "7", "8", "o"]) == false
   end
+  
+  test "a full board with no wins is recognised as a draw" do
+    assert TicTacToe.Board.draw?(["x", "o", "x", 
+       "o", "x", "x", 
+       "o", "x", "o"]) == true
+    assert TicTacToe.Board.draw?(["1", "o", "x", 
+       "o", "x", "o", 
+       "o", "x", "x"]) == false
+  end
 
   test "board marks a cell with given symbol" do
     assert TicTacToe.Board.mark_cell(["1", "2", "3", "4", "5", "6", "7", "8", "9"], "1", "x") == ["x", "2", "3",
