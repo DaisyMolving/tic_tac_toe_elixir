@@ -3,15 +3,13 @@ defmodule TicTacToeTest.Display do
   import ExUnit.CaptureIO
   
   test "prints farewell message if input is q or Q, otherwise continues" do
-    assert capture_io("q", fn ->
-      TicTacToe.Display.ask_to_play_or_end
-    end) =~ "Welcome to TicTacToe! To play, press any key to continue, or q to quit: Goodbye"
-    assert capture_io("Q", fn ->
-      TicTacToe.Display.ask_to_play_or_end
-    end) =~ "Welcome to TicTacToe! To play, press any key to continue, or q to quit: Goodbye"
-    assert capture_io("go", fn ->
-      TicTacToe.Display.ask_to_play_or_end
-    end) =~ "Welcome to TicTacToe! To play, press any key to continue, or q to quit:"
+    assert TicTacToe.Display.ask_to_play_or_end("go") == :continue
+    assert capture_io(fn ->
+      TicTacToe.Display.ask_to_play_or_end("q")
+    end) =~ "Goodbye"
+    assert capture_io(fn ->
+      TicTacToe.Display.ask_to_play_or_end("Q")
+    end) =~ "Goodbye"
   end
 
   test "asks player to set name and continuously prints invalid message until name is valid" do
