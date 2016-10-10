@@ -1,43 +1,46 @@
 defmodule TicTacToe.Display do
 
+  @user_input_request %{
+    :name  => ", please input your name: ",
+    :marker => ", please choose a marker of any single character that is not a number. ",
+    :turn => "'s turn, input the number of the position that you would like to mark: "
+  }
+
+  @accepted_input %{
+    :name => ~r/[a-z, A-Z]+/,
+    :marker => ~r/^(\D)$/,
+    :turn => ~r/[1-9]/
+  }
+
+  @failure_instruction %{
+    :name => "That is an invalid name.\n Please try again without using any non-letters: ",
+    :marker => "That is an invalid marker.\n Choose a single character that is not a number: ",
+    :turn => "That is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
+  }
+
+  def request_to_validate(request_category, player_identifier) do
+    user_input = get_stripped_input(player_identifier <> @user_input_request[request_category])
+    accepted_input = @accepted_input[request_category]
+    failure = @failure_instruction[request_category]
+
+    run_validation(user_input, accepted_input, failure)
+  end
+
+  def run_validation(user_input, accepted_input, failure) do
+    cond do
+      String.match?(user_input, accepted_input) ->
+        user_input
+      :else ->
+        run_validation(get_stripped_input(failure), accepted_input, failure)
+      end
+  end
+
   def ask_to_play_or_end(user_input) do
     cond do
       String.match?(user_input, ~r/([^q, Q])/) ->
         :continue
       :else ->
         farewell_message
-      end
-  end
-
-  def ask_for_name(player_number) do
-    input = request_set_player_name(player_number)
-    cond do
-      String.match?(input, ~r/[a-z, A-Z]+/) ->
-        input
-      :else ->
-        invalid_input
-        ask_for_name(player_number)
-      end
-  end
-
-  def ask_for_marker(player_name) do
-    cond do
-      String.match?(request_set_player_marker(player_name), ~r/^(\D)$/) ->
-        :set_marker
-      :else ->
-        invalid_input
-        ask_for_marker(player_name)
-      end
-  end
-
-  def ask_for_turn(player_name) do
-    input = request_turn(player_name)
-    cond do
-      String.match?(input, ~r/[1-9]/) ->
-        input
-      :else ->
-        invalid_input
-        ask_for_turn(player_name)
       end
   end
 
@@ -58,28 +61,12 @@ defmodule TicTacToe.Display do
     IO.puts("#{winning_player} won! Congratulations!")
   end
 
-  def welcome_introduction do
-    get_stripped_input("Welcome to TicTacToe! To play, press any key to continue, or q to quit: ")
-  end
-
   defp farewell_message do
-    IO.puts("Goodbye")
+    "Goodbye"
   end
 
-  defp request_set_player_name(player_number) do
-    get_stripped_input("Player #{player_number}, please input your name: ")
-  end
-
-  defp request_set_player_marker(player_name) do
-    get_stripped_input("#{player_name}, please choose a marker of any single character that is not a number. ")
-  end
-
-  defp invalid_input do
-    IO.write("Sorry, that is not a valid input. ")
-  end
-
-  defp request_turn(player_name) do
-    get_stripped_input("#{player_name}'s turn, input the number of the position that you would like to mark: ")
+  def welcome_introduction do
+    "Welcome to Tic Tac Toe, a two player strategy game.\n"
   end
 
   defp get_stripped_input(output_message) do
