@@ -19,10 +19,8 @@ defmodule TicTacToe.Display do
   }
 
   def request_to_validate(request_category, player_identifier) do
-    user_input = get_stripped_input(player_identifier <> @user_input_request[request_category])
-    accepted_input = @accepted_input[request_category]
-    failure = @failure_instruction[request_category]
-    run_validation(user_input, accepted_input, failure)
+    get_stripped_input(player_identifier <> @user_input_request[request_category])
+    |> run_validation(@accepted_input[request_category], @failure_instruction[request_category])
   end
 
   def run_validation(user_input, accepted_input, failure) do
