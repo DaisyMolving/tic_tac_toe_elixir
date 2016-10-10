@@ -50,7 +50,7 @@ defmodule TicTacToe.Display do
   end
 
   def welcome_introduction do
-    "Welcome to Tic Tac Toe, a two player strategy game.\n"
+    IO.puts("\n\nWelcome to Tic Tac Toe, a two player strategy game.\n")
   end
 
   defp get_stripped_input(output_message) do
