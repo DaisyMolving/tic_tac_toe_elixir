@@ -51,10 +51,6 @@ defmodule TicTacToe.Display do
     IO.puts("#{winning_player} won! Congratulations!")
   end
 
-  defp farewell_message do
-    "Goodbye"
-  end
-
   def welcome_introduction do
     "Welcome to Tic Tac Toe, a two player strategy game.\n"
   end
