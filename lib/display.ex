@@ -22,7 +22,6 @@ defmodule TicTacToe.Display do
     user_input = get_stripped_input(player_identifier <> @user_input_request[request_category])
     accepted_input = @accepted_input[request_category]
     failure = @failure_instruction[request_category]
-
     run_validation(user_input, accepted_input, failure)
   end
 
@@ -32,15 +31,6 @@ defmodule TicTacToe.Display do
         user_input
       :else ->
         run_validation(get_stripped_input(failure), accepted_input, failure)
-      end
-  end
-
-  def ask_to_play_or_end(user_input) do
-    cond do
-      String.match?(user_input, ~r/([^q, Q])/) ->
-        :continue
-      :else ->
-        farewell_message
       end
   end
 
