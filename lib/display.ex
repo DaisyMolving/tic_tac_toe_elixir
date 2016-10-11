@@ -3,13 +3,13 @@ defmodule TicTacToe.Display do
   @user_input_request %{
     :name  => ", please input your name: \n",
     :marker => ", please choose a marker of any single character that is not a number: \n",
-    :turn => "'s turn, input the number of the position that you would like to mark: \n"
+    :turn => "'s turn, input the number of the position that you would like to mark: \n",
   }
 
   @accepted_input %{
     :name => ~r/[a-z, A-Z]+/,
     :marker => ~r/^(\D)$/,
-    :turn => ~r/[1-9]/
+    :turn => ~r/[1-9]/,
   }
 
   @failure_instruction %{
@@ -55,6 +55,14 @@ defmodule TicTacToe.Display do
 
   def unavailable_cell do
     IO.puts("\nUh Oh! That position is unavailable! Please try again.\n")
+  end
+
+  def ask_to_play_again do
+    get_stripped_input("\nWould you like to play again? Type y or n: ")
+  end
+
+  def exit_message do
+    IO.puts("\nGoodbye!")
   end
 
   defp get_stripped_input(output_message) do
