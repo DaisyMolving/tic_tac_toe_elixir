@@ -4,18 +4,21 @@ defmodule TicTacToe.Display do
     :name  => ", please input your name: \n",
     :marker => ", please choose a marker of any single character that is not a number: \n",
     :turn => "'s turn, input the number of the position that you would like to mark: \n",
+    :play_again => ", would you like to play again? Type y or n:"
   }
 
   @accepted_input %{
     :name => ~r/[a-z, A-Z]+/,
     :marker => ~r/^(\D)$/,
     :turn => ~r/[1-9]/,
+    :play_again => ~r/[yYnN]/
   }
 
   @failure_instruction %{
     :name => "\nThat is an invalid name.\n Please try again without using any non-letters: ",
     :marker => "\nThat is an invalid marker.\n Choose a single character that is not a number: ",
-    :turn => "\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
+    :turn => "\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: ",
+    :play_again => "\nThat is not a valid answer, please type y for yes or n for no: "
   }
 
   def request_to_validate(request_category, player_identifier) do
@@ -55,14 +58,6 @@ defmodule TicTacToe.Display do
 
   def unavailable_cell do
     IO.puts("\nUh Oh! That position is unavailable! Please try again.\n")
-  end
-
-  def ask_to_play_again do
-    get_stripped_input("\nWould you like to play again? Type y or n: ")
-  end
-
-  def exit_message do
-    IO.puts("\nGoodbye!")
   end
 
   defp get_stripped_input(output_message) do

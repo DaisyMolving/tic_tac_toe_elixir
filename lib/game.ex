@@ -45,13 +45,13 @@ defmodule TicTacToe.Game do
   end
 
   def decide_to_play_again do
-    case Display.ask_to_play_again do
+    case Display.request_to_validate(:play_again, "Players") do
       "y" ->
         play_tic_tac_toe
-      "n" ->
-        Display.exit_message
-      _ ->
-        decide_to_play_again
+      "Y" ->
+        play_tic_tac_toe
+      _ -> 
+        :gameover
     end
   end
 
