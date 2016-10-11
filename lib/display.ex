@@ -10,7 +10,7 @@ defmodule TicTacToe.Display do
   @accepted_input %{
     :name => ~r/[a-z, A-Z]+/,
     :marker => ~r/^(\D)$/,
-    :turn => ~r/[1-9]/,
+    :turn => ~r/^([1-9])$/,
     :play_again => ~r/[yYnN]/
   }
 
@@ -22,7 +22,7 @@ defmodule TicTacToe.Display do
   }
 
   def request_to_validate(request_category, player_identifier) do
-    get_stripped_input(player_identifier <> @user_input_request[request_category])
+    get_stripped_input("\n" <> player_identifier <> @user_input_request[request_category])
     |> run_validation(@accepted_input[request_category], @failure_instruction[request_category])
   end
 
