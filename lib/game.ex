@@ -25,6 +25,7 @@ defmodule TicTacToe.Game do
       Board.available_cell?(current_board, mark_input) ->
         look_for_win_or_draw(player_1, player_2, Board.mark_cell(current_board, mark_input, player_1.marker))
       :else ->
+        Display.unavailable_cell
         player_take_turn(player_1, player_2, current_board)
       end
   end

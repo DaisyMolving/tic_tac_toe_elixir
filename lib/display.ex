@@ -1,9 +1,9 @@
 defmodule TicTacToe.Display do
 
   @user_input_request %{
-    :name  => ", please input your name: ",
-    :marker => ", please choose a marker of any single character that is not a number. ",
-    :turn => "'s turn, input the number of the position that you would like to mark: "
+    :name  => ", please input your name: \n",
+    :marker => ", please choose a marker of any single character that is not a number: \n",
+    :turn => "'s turn, input the number of the position that you would like to mark: \n"
   }
 
   @accepted_input %{
@@ -13,9 +13,9 @@ defmodule TicTacToe.Display do
   }
 
   @failure_instruction %{
-    :name => "That is an invalid name.\n Please try again without using any non-letters: ",
-    :marker => "That is an invalid marker.\n Choose a single character that is not a number: ",
-    :turn => "That is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
+    :name => "\nThat is an invalid name.\n Please try again without using any non-letters: ",
+    :marker => "\nThat is an invalid marker.\n Choose a single character that is not a number: ",
+    :turn => "\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
   }
 
   def request_to_validate(request_category, player_identifier) do
@@ -42,15 +42,19 @@ defmodule TicTacToe.Display do
   end
 
   def draw_message do
-    IO.puts("It's a draw!")
+    IO.puts("\nIt's a draw!\n")
   end
 
   def congratulate_winner(winning_player) do
-    IO.puts("#{winning_player} won! Congratulations!")
+    IO.puts("\n#{winning_player} won! Congratulations!\n")
   end
 
   def welcome_introduction do
     IO.puts("\n\nWelcome to Tic Tac Toe, a two player strategy game.\n")
+  end
+
+  def unavailable_cell do
+    IO.puts("\nUh Oh! That position is unavailable! Please try again.\n")
   end
 
   defp get_stripped_input(output_message) do
