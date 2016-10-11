@@ -1,24 +1,16 @@
 # TicTacToe
 
-**TODO: Add description**
+TicTacToe is a two player strategy game where the winner acheives a sequence of three on a grid.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+Install Elixir
 
-  1. Add `tic_tac_toe` to your list of dependencies in `mix.exs`:
+Within the TicTacToe directory run:
 
-    ```elixir
-    def deps do
-      [{:tic_tac_toe, "~> 0.1.0"}]
-    end
-    ```
+`mix play`
 
-  2. Ensure `tic_tac_toe` is started before your application:
+and follow the prompts.
 
-    ```elixir
-    def application do
-      [applications: [:tic_tac_toe]]
-    end
-    ```
+This version is Human vs Human, and so requires two players.
 
