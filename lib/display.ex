@@ -1,10 +1,10 @@
 defmodule TicTacToe.Display do
 
   @user_input_request %{
-    :name  => "Welcome player_identifier, please input your name: \n",
-    :marker => "player_identifier, please choose a marker of any single character that is not a number: \n",
-    :turn => "It's player_identifier's turn, input the number of the position that you would like to mark: \n",
-    :play_again => "player_identifier, would you like to play again? Type y or n:"
+    :name  => "\nWelcome player_identifier, please input your name: \n",
+    :marker => "\nplayer_identifier, please choose a marker of any single character that is not a number: \n",
+    :turn => "\nIt's player_identifier's turn, \ninput the number of the position that you would like to mark: \n",
+    :play_again => "\nplayer_identifier, would you like to play again? Type y or n:"
   }
 
   @accepted_input %{
