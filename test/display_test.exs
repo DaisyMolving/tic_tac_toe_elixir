@@ -17,7 +17,7 @@ defmodule TicTacToeTest.Display do
   test "asks player to take turn and continuously prints invalid message until turn is valid" do
     assert capture_io("x\n$w\n1", fn ->
       TicTacToe.Display.request_to_validate(:turn, "Gary")
-    end) =~ "Gary's turn, input the number of the position that you would like to mark: \n\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: \nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
+    end) =~ "Gary's turn, \ninput the number of the position that you would like to mark: \n\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: \nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
   end
 
   test "displays current board" do

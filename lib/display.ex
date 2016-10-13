@@ -42,6 +42,7 @@ defmodule TicTacToe.Display do
       Enum.join(row, " ")
     end)
     |> Enum.join("\n")
+    |> String.pad_leading(20, "\n")
     |> IO.puts
   end
 
