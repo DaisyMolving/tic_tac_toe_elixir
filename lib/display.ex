@@ -22,17 +22,18 @@ defmodule TicTacToe.Display do
   }
 
   def request_to_validate(request_category, player_identifier) do
-    get_stripped_input(String.replace(@user_input_request[request_category], "player_identifier", player_identifier))
+    @user_input_request[request_category]
+    |> String.replace("player_identifier", player_identifier)
+    |> get_stripped_input
     |> run_validation(@accepted_input[request_category], @failure_instruction[request_category])
   end
 
   def run_validation(user_input, accepted_input, failure) do
-    cond do
-      String.match?(user_input, accepted_input) ->
-        user_input
-      :else ->
-        run_validation(get_stripped_input(failure), accepted_input, failure)
-      end
+    if String.match?(user_input, accepted_input) do
+      user_input
+    else
+      run_validation(get_stripped_input(failure), accepted_input, failure)
+    end
   end
 
   def display_board(current_board) do
@@ -40,8 +41,8 @@ defmodule TicTacToe.Display do
     |> Enum.map(fn(row) ->
       Enum.join(row, " ")
     end)
-  |> Enum.join("\n")
-  |> IO.puts
+    |> Enum.join("\n")
+    |> IO.puts
   end
 
   def draw_message do

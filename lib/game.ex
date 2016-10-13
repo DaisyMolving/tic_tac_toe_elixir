@@ -22,13 +22,12 @@ defmodule TicTacToe.Game do
   def player_take_turn(player_1, player_2, current_board) do
     Display.display_board(current_board)
     mark_input = Display.request_to_validate(:turn, player_1.name)
-    cond do
-      Board.available_cell?(current_board, mark_input) ->
-        look_for_win_or_draw(player_1, player_2, Board.mark_cell(current_board, mark_input, player_1.marker))
-      :else ->
-        Display.unavailable_cell
-        player_take_turn(player_1, player_2, current_board)
-      end
+    if Board.available_cell?(current_board, mark_input) do
+      look_for_win_or_draw(player_1, player_2, Board.mark_cell(current_board, mark_input, player_1.marker))
+    else
+      Display.unavailable_cell
+      player_take_turn(player_1, player_2, current_board)
+    end
   end
 
   def look_for_win_or_draw(player_1, player_2, current_board) do
