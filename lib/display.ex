@@ -1,10 +1,10 @@
 defmodule TicTacToe.Display do
 
   @user_input_request %{
-    :name  => ", please input your name: \n",
-    :marker => ", please choose a marker of any single character that is not a number: \n",
-    :turn => "'s turn, input the number of the position that you would like to mark: \n",
-    :play_again => ", would you like to play again? Type y or n:"
+    :name  => "Welcome player_identifier, please input your name: \n",
+    :marker => "player_identifier, please choose a marker of any single character that is not a number: \n",
+    :turn => "It's player_identifier's turn, input the number of the position that you would like to mark: \n",
+    :play_again => "player_identifier, would you like to play again? Type y or n:"
   }
 
   @accepted_input %{
@@ -22,7 +22,7 @@ defmodule TicTacToe.Display do
   }
 
   def request_to_validate(request_category, player_identifier) do
-    get_stripped_input("\n" <> player_identifier <> @user_input_request[request_category])
+    get_stripped_input(String.replace(@user_input_request[request_category], "player_identifier", player_identifier))
     |> run_validation(@accepted_input[request_category], @failure_instruction[request_category])
   end
 
