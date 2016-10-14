@@ -33,11 +33,13 @@ defmodule TicTacToe.Board do
     sequence_types = collect_sequences(current_board)
     Enum.any?(sequence_types, fn(sequences) ->
       Enum.any?(sequences, fn(sequence) ->
-        Enum.uniq(sequence)
-        |> Enum.count == 1
+        all_same?(sequence)
       end)
     end)
   end
+
+  defp all_same?([x, x, x]), do: true
+  defp all_same?(_), do: false
 
   def draw?(current_board) do
     sequence_types = collect_sequences(current_board)
