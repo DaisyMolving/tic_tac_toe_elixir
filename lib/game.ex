@@ -14,14 +14,14 @@ defmodule TicTacToe.Game do
   end
 
   def set_name_and_marker do
-    player_1 = Player.set_name_and_marker(Display.request_to_validate(:name, "Player 1"), "x")
-    player_2 = Player.set_name_and_marker(Display.request_to_validate(:name, "Player 2"), "o")
+    player_1 = Player.set_name_and_marker(Display.validate_name(Display.name_input_request("Player 1")), "x")
+    player_2 = Player.set_name_and_marker(Display.validate_name(Display.name_input_request("Player 2")), "o")
     {player_1, player_2}
   end
 
   def player_take_turn(player_1, player_2, current_board) do
     Display.display_board(current_board)
-    mark_input = Display.request_to_validate(:turn, player_1.name)
+    mark_input = Display.validate_turn(Display.turn_input_request(player_1.name))
     if Board.available_cell?(current_board, mark_input) do
       look_for_win_or_draw(player_1, player_2, Board.mark_cell(current_board, mark_input, player_1.marker))
     else

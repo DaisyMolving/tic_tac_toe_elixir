@@ -1,35 +1,19 @@
 defmodule TicTacToe.Display do
 
-  @user_input_request %{
-    :name  => "\nWelcome player_identifier, please input your name: \n",
-    :marker => "\nplayer_identifier, please choose a marker of any single character that is not a number: \n",
-    :turn => "\nIt's player_identifier's turn, \ninput the number of the position that you would like to mark: \n",
-    :play_again => "\nplayer_identifier, would you like to play again? Type y or n:"
-  }
-
-  @accepted_input %{
-    :name => ~r/[a-z, A-Z]+/,
-    :marker => ~r/^(\D)$/,
-    :turn => ~r/^([1-9])$/,
-    :play_again => ~r/[yYnN]/
-  }
-
-  @failure_instruction %{
-    :name => "\nThat is an invalid name.\n Please try again without using any non-letters: ",
-    :marker => "\nThat is an invalid marker.\n Choose a single character that is not a number: ",
-    :turn => "\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: ",
-    :play_again => "\nThat is not a valid answer, please type y for yes or n for no: "
-  }
-
-  def validate_name(player_identifier) do
-    run_validation(name_input_request(player_identifier), ~r/[a-z, A-Z]+/, name_input_failure)
+  def validate_name(name_input) do
+    run_validation(name_input, ~r/[a-z, A-Z]+/, name_input_failure)
   end
 
-  def request_to_validate(request_category, player_identifier) do
-    @user_input_request[request_category]
-    |> String.replace("player_identifier", player_identifier)
-    |> get_stripped_input
-    |> run_validation(@accepted_input[request_category], @failure_instruction[request_category])
+  def validate_marker(marker_input) do
+    run_validation(marker_input, ~r/^(\D)$/, marker_input_failure)
+  end
+
+  def validate_turn(turn_input) do
+    run_validation(turn_input, ~r/^([1-9])$/, turn_input_failure)
+  end
+  
+  def validate_play_again(play_again_input) do
+    run_validation(play_again_input, ~r/[yYnN]/, play_again_input_failure)
   end
 
   def run_validation(user_input, accepted_input, failure) do
@@ -66,12 +50,36 @@ defmodule TicTacToe.Display do
     IO.puts("\nUh Oh! That position is unavailable! Please try again.\n")
   end
   
-  defp name_input_request(player_number) do
-    "\nWelcome Player 1, please input your name: \n"
+  def name_input_request(player_number) do
+    get_stripped_input("\nWelcome #{player_number}, please input your name: \n")
   end
 
   defp name_input_failure do
     "\nThat is an invalid name.\n Please try again without using any non-letters: "
+  end
+
+  # defp marker_input_request(player_name) do
+  #   "\n#{player_name}, please choose a marker of any single character that is not a number: \n"
+  # end
+
+  defp marker_input_failure do
+    "\nThat is an invalid marker.\n Choose a single character that is not a number: "
+  end
+
+  def turn_input_request(player_name) do
+    get_stripped_input("\nIt's #{player_name}'s turn, \ninput the number of the position that you would like to mark: \n")
+  end
+
+  defp turn_input_failure do
+    "\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
+  end
+
+  def play_again_input_request do
+    get_stripped_input("\nPlayers, would you like to play again? Type y or n:")
+  end
+
+  defp play_again_input_failure do
+    "\nThat is not a valid answer, please type y for yes or n for no: " 
   end
 
   defp get_stripped_input(output_message) do
