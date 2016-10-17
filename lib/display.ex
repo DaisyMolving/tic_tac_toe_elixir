@@ -21,6 +21,10 @@ defmodule TicTacToe.Display do
     :play_again => "\nThat is not a valid answer, please type y for yes or n for no: "
   }
 
+  def validate_name(player_identifier) do
+    run_validation(name_input_request(player_identifier), ~r/[a-z, A-Z]+/, name_input_failure)
+  end
+
   def request_to_validate(request_category, player_identifier) do
     @user_input_request[request_category]
     |> String.replace("player_identifier", player_identifier)
@@ -60,6 +64,14 @@ defmodule TicTacToe.Display do
 
   def unavailable_cell do
     IO.puts("\nUh Oh! That position is unavailable! Please try again.\n")
+  end
+  
+  defp name_input_request(player_number) do
+    "\nWelcome Player 1, please input your name: \n"
+  end
+
+  defp name_input_failure do
+    "\nThat is an invalid name.\n Please try again without using any non-letters: "
   end
 
   defp get_stripped_input(output_message) do

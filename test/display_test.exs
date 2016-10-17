@@ -3,9 +3,7 @@ defmodule TicTacToeTest.Display do
   import ExUnit.CaptureIO
   
   test "asks player to set name" do
-    assert capture_io("blah", fn ->
-      TicTacToe.Display.request_to_validate(:name, "Player 1")
-    end) =~ "Player 1, please input your name:"
+    assert TicTacToe.Display.validate_name("Player 1") =~ "Player 1, please input your name:"
   end
 
   test "prints name invalid message if input is invalid" do
