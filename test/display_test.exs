@@ -2,22 +2,40 @@ defmodule TicTacToeTest.Display do
   use ExUnit.Case
   import ExUnit.CaptureIO
   
-  test "asks player to set name and continuously prints invalid message until name is valid" do
-    assert capture_io("123\n!@£\ndaisy", fn ->
+  test "asks player to set name" do
+    assert capture_io("blah", fn ->
       TicTacToe.Display.request_to_validate(:name, "Player 1")
-    end) =~ "Player 1, please input your name: \n\nThat is an invalid name.\n Please try again without using any non-letters: \nThat is an invalid name.\n Please try again without using any non-letters: "
+    end) =~ "Player 1, please input your name:"
   end
 
-  test "asks player to set marker and continuously prints invalid message until marker is valid" do
-    assert capture_io("1\n$w\nx", fn ->
+  test "prints name invalid message if input is invalid" do
+    assert capture_io("123\nblah", fn ->
+      TicTacToe.Display.request_to_validate(:name, "Player 1")
+    end) =~ "That is an invalid name"
+  end
+
+  test "asks player to set marker" do
+    assert capture_io("x", fn ->
       TicTacToe.Display.request_to_validate(:marker, "Gary")
-    end) =~ "Gary, please choose a marker of any single character that is not a number: \n\nThat is an invalid marker.\n Choose a single character that is not a number: \nThat is an invalid marker.\n Choose a single character that is not a number: "
+    end) =~ "choose a marker"
   end
 
-  test "asks player to take turn and continuously prints invalid message until turn is valid" do
-    assert capture_io("x\n$w\n1", fn ->
+  test "prints marker invalid message if input is invalid" do
+    assert capture_io("123\nx", fn ->
+      TicTacToe.Display.request_to_validate(:marker, "Gary")
+    end) =~ "That is an invalid marker"
+  end
+
+  test "asks player to take turn" do
+    assert capture_io("1", fn ->
       TicTacToe.Display.request_to_validate(:turn, "Gary")
-    end) =~ "Gary's turn, \ninput the number of the position that you would like to mark: \n\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: \nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
+    end) =~ "input the number of the position that you would like to mark"
+  end
+
+  test "prints turn invalid message if input is invalid" do
+    assert capture_io("-9\n50\ng\n1", fn ->
+      TicTacToe.Display.request_to_validate(:turn, "Gary")
+    end) =~ "That is not a valid turn"
   end
 
   test "displays current board" do
