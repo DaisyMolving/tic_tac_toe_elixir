@@ -16,15 +16,6 @@ defmodule TicTacToe.Board do
     |> String.match?(~r/[1-9]/)
   end
 
-  def mark_if_available(current_board, cell_number, player_number) do
-    cond do
-      available_cell?(current_board, cell_number) ->
-        mark_cell(current_board, cell_number, player_number)
-      :else ->
-        :not_available
-      end
-  end
-
   defp get_cell_index(cell_number) do
     String.to_integer(cell_number) - 1
   end
