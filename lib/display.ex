@@ -1,5 +1,5 @@
 defmodule TicTacToe.Display do
-
+  
   def validate_name(name_input) do
     run_validation(name_input, ~r/[a-z, A-Z]+/, name_input_failure)
   end

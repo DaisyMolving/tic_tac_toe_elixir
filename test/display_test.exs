@@ -1,6 +1,6 @@
 defmodule TicTacToeTest.Display do
   use ExUnit.Case
-  
+
   test "returns valid name" do
     assert TicTacToe.Display.validate_name("Gary") == "Gary"
   end
