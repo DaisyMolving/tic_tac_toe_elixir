@@ -34,35 +34,35 @@ defmodule TicTacToe.Display do
   end
 
   def welcome_introduction do
-    "\n\nWelcome to Tic Tac Toe, a two player strategy game.\n"
+    IO.puts("\n\nWelcome to Tic Tac Toe, a two player strategy game.\n")
   end
 
   def name_input_request(player_number) do
-    "\nWelcome #{player_number}, please input your name: \n"
+    get_stripped_input("\nWelcome #{player_number}, please input your name: \n")
   end
 
   def marker_input_request(player_name) do
-    "\n#{player_name}, please choose a marker of any single character that is not a number: \n"
+    get_stripped_input("\n#{player_name}, please choose a marker of any single character that is not a number: \n")
   end
 
   def turn_input_request(player_name, marker) do
-    "\nIt's #{player_name}'s turn with the marker #{marker}, \ninput the number of the position that you would like to mark: \n"
+    get_stripped_input("\nIt's #{player_name}'s turn with the marker #{marker}, \ninput the number of the position that you would like to mark: \n")
   end
 
   def unavailable_cell do
-    "\nUh Oh! That position is unavailable! Please try again.\n"
+    IO.puts("\nUh Oh! That position is unavailable! Please try again:\n")
   end
   
   def draw_message do
-    "\nIt's a draw!\n"
+    IO.puts("\nIt's a draw!\n")
   end
 
   def congratulate_winner(winning_player) do
-    "\n#{winning_player} won! Congratulations!\n"
+    IO.puts("\n#{winning_player} won! Congratulations!\n")
   end
 
   def play_again_input_request do
-    "\nPlayers, would you like to play again? Type y or n:"
+    get_stripped_input("\nPlayers, would you like to play again? Type y or n:")
   end
 
   defp name_input_failure do

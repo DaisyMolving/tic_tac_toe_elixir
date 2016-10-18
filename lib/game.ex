@@ -20,8 +20,8 @@ defmodule TicTacToe.Game do
   end
 
   def player_take_turn(player_1, player_2, current_board) do
-    Display.display_board(current_board)
-    mark_input = Display.validate_turn(Display.turn_input_request(player_1.name))
+    display_board(current_board)
+    mark_input = Display.validate_turn(Display.turn_input_request(player_1.name, player_1.marker))
     if Board.available_cell?(current_board, mark_input) do
       look_for_win_or_draw(player_1, player_2, Board.mark_cell(current_board, mark_input, player_1.marker))
     else
@@ -34,17 +34,17 @@ defmodule TicTacToe.Game do
     cond do
       Board.win?(current_board) ->
         Display.congratulate_winner(player_1.name)
-        Display.display_board(current_board)
+        display_board(current_board)
       Board.draw?(current_board) ->
         Display.draw_message
-        Display.display_board(current_board)
+        display_board(current_board)
       :else ->
         player_take_turn(player_2, player_1, current_board)
     end
   end
 
   def decide_to_play_again do
-    case Display.request_to_validate(:play_again, "Players") do
+    case Display.validate_play_again(Display.play_again_input_request) do
       "y" ->
         play_tic_tac_toe
       "Y" ->
@@ -54,4 +54,8 @@ defmodule TicTacToe.Game do
     end
   end
 
+  def display_board(current_board) do
+    Display.format_board(current_board)
+    |> IO.puts
+  end
 end
