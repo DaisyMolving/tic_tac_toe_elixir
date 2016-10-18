@@ -14,8 +14,8 @@ defmodule TicTacToe.Game do
   end
 
   def set_name_and_marker do
-    player_1 = Player.set_name_and_marker(Display.validate_name(Display.name_input_request("Player 1")), "x")
-    player_2 = Player.set_name_and_marker(Display.validate_name(Display.name_input_request("Player 2")), "o")
+    player_1 = Player.build(Display.validate_name(Display.name_input_request("Player 1")), "x")
+    player_2 = Player.build(Display.validate_name(Display.name_input_request("Player 2")), "o")
     {player_1, player_2}
   end
 
