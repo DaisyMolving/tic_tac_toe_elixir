@@ -24,22 +24,21 @@ defmodule TicTacToe.Display do
     end
   end
 
-  def display_board(current_board) do
+  def format_board(current_board) do
     Enum.chunk(current_board, 3)
     |> Enum.map(fn(row) ->
       Enum.join(row, " ")
     end)
     |> Enum.join("\n")
     |> String.pad_leading(20, "\n")
-    |> IO.puts
   end
 
   def draw_message do
-    IO.puts("\nIt's a draw!\n")
+    "\nIt's a draw!\n"
   end
 
   def congratulate_winner(winning_player) do
-    IO.puts("\n#{winning_player} won! Congratulations!\n")
+    "\n#{winning_player} won! Congratulations!\n"
   end
 
   def welcome_introduction do
@@ -47,7 +46,7 @@ defmodule TicTacToe.Display do
   end
 
   def unavailable_cell do
-    IO.puts("\nUh Oh! That position is unavailable! Please try again.\n")
+    "\nUh Oh! That position is unavailable! Please try again.\n"
   end
   
   def name_input_request(player_number) do
@@ -58,9 +57,9 @@ defmodule TicTacToe.Display do
     "\nThat is an invalid name.\n Please try again without using any non-letters: "
   end
 
-  # defp marker_input_request(player_name) do
-  #   "\n#{player_name}, please choose a marker of any single character that is not a number: \n"
-  # end
+  defp marker_input_request(player_name) do
+    "\n#{player_name}, please choose a marker of any single character that is not a number: \n"
+  end
 
   defp marker_input_failure do
     "\nThat is an invalid marker.\n Choose a single character that is not a number: "

@@ -31,22 +31,21 @@ defmodule TicTacToeTest.Display do
   end
 
   test "displays current board" do
-    assert capture_io(fn ->
-      TicTacToe.Display.display_board(["1", "2", "3",
+    TicTacToe.Display.format_board(["1", "2", "3",
       "4", "5", "6",
-      "7", "8", "9"]) 
-    end) =~ "1 2 3\n4 5 6\n7 8 9"
+      "7", "8", "9"])  =~ "1 2 3\n4 5 6\n7 8 9"
+  end
+
+  test "returns message for unavailable cell" do
+    TicTacToe.Display.unavailable_cell =~ "That position is unavailable"
+
   end
 
   test "returns message for draw" do
-    assert capture_io(fn ->
-      TicTacToe.Display.draw_message 
-    end) =~ "It's a draw!"
+    TicTacToe.Display.draw_message =~ "It's a draw!"
   end
 
   test "congratulates winner" do
-    assert capture_io(fn ->
-      TicTacToe.Display.congratulate_winner("Barry") 
-    end) =~ "Barry won! Congratulations!"
+    TicTacToe.Display.congratulate_winner("Barry")  =~ "Barry won! Congratulations!"
   end
 end
