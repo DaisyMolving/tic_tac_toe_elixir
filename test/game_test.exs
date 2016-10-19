@@ -11,6 +11,7 @@ defmodule TicTacToeTest.Game do
   test "builds players" do
     assert capture_io("Barry\nGary", fn ->
       TicTacToe.Game.build_players 
-    end) == ""
+    end) =~ "please input your name: \n\nWelcome Player 2,"
   end
+
 end

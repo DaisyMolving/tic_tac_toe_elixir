@@ -8,7 +8,7 @@ defmodule TicTacToeTest.Player do
   end
 
   test "sets a name that is capitalized and a marker" do
-    new_player = TicTacToe.Player.build("daisy", "o")
+    new_player = TicTacToe.Player.build({:ok, "daisy"}, "o")
     assert new_player.name == "Daisy"
     assert new_player.marker == "o"
   end

@@ -4,6 +4,7 @@ defmodule TicTacToe.Game do
   def play_tic_tac_toe do
     welcome_players
     {player_1, player_2} = build_players
+    IO.puts player_1.name
   end
 
   def welcome_players do
