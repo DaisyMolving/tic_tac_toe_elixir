@@ -18,9 +18,9 @@ defmodule TicTacToe.Messager do
 
   def run_validation(user_input, accepted_input, failure) do
     if String.match?(user_input, accepted_input) do
-      user_input
+      {:ok, user_input}
     else
-      run_validation(get_stripped_input(failure), accepted_input, failure)
+      {:error, failure}
     end
   end
 
@@ -79,10 +79,6 @@ defmodule TicTacToe.Messager do
 
   defp play_again_input_failure do
     "\nThat is not a valid answer, please type y for yes or n for no: " 
-  end
-
-  def get_stripped_input(output_message) do
-    String.strip(IO.gets(output_message))
   end
 
 end
