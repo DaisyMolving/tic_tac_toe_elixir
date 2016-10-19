@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Play do
   import TicTacToe.Game
 
   def run(_) do
-    play_tic_tac_toe
+    # play_tic_tac_toe
   end
 
 end
