@@ -14,4 +14,10 @@ defmodule TicTacToeTest.Game do
     end) =~ "please input your name: \n\nWelcome Player 2,"
   end
 
+  test "does not build players until name input is valid" do
+    assert capture_io("123\nBarry\nGary", fn ->
+      TicTacToe.Game.build_players 
+    end) =~ "invalid name"
+  end
+
 end
