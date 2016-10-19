@@ -6,7 +6,7 @@ defmodule TicTacToe.Game do
     welcome_to_game
     {player_1, player_2} = set_name_and_marker
     player_take_turn(player_1, player_2, new_board)
-    decide_to_play_again
+    decide_to_play_again(Display.validate_play_again(Display.play_again_input_request))
   end
 
   def welcome_to_game do
@@ -43,8 +43,8 @@ defmodule TicTacToe.Game do
     end
   end
 
-  def decide_to_play_again do
-    case Display.validate_play_again(Display.play_again_input_request) do
+  def decide_to_play_again(play_again_decision) do
+    case play_again_decision do
       "y" ->
         play_tic_tac_toe
       "Y" ->
