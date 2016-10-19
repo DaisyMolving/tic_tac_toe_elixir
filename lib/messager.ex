@@ -1,29 +1,5 @@
 defmodule TicTacToe.Messager do
   
-  def validate_name(name_input) do
-    run_validation(name_input, ~r/[a-z, A-Z]+/, name_input_failure)
-  end
-
-  def validate_marker(marker_input) do
-    run_validation(marker_input, ~r/^(\D)$/, marker_input_failure)
-  end
-
-  def validate_turn(turn_input) do
-    run_validation(turn_input, ~r/^([1-9])$/, turn_input_failure)
-  end
-  
-  def validate_play_again(play_again_input) do
-    run_validation(play_again_input, ~r/[yYnN]/, play_again_input_failure)
-  end
-
-  def run_validation(user_input, accepted_input, failure) do
-    if String.match?(user_input, accepted_input) do
-      {:ok, user_input}
-    else
-      {:error, failure}
-    end
-  end
-
   def format_board(current_board) do
     Enum.chunk(current_board, 3)
     |> Enum.map(fn(row) ->
@@ -65,19 +41,19 @@ defmodule TicTacToe.Messager do
     "\nPlayers, would you like to play again? Type y or n:"
   end
 
-  defp name_input_failure do
+  def name_input_failure do
     "\nThat is an invalid name.\n Please try again without using any non-letters: "
   end
 
-  defp marker_input_failure do
+  def marker_input_failure do
     "\nThat is an invalid marker.\n Choose a single character that is not a number: "
   end
 
-  defp turn_input_failure do
+  def turn_input_failure do
     "\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
   end
 
-  defp play_again_input_failure do
+  def play_again_input_failure do
     "\nThat is not a valid answer, please type y for yes or n for no: " 
   end
 
