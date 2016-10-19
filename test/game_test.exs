@@ -20,4 +20,10 @@ defmodule TicTacToeTest.Game do
     end) =~ "invalid name"
   end
 
+  test "displays the board" do
+    assert capture_io(fn ->
+      TicTacToe.Game.display_board(["1", "2", "3", "4", "5", "6", "7", "8", "9"])
+    end) =~ "1 2 3\n4 5 6\n7 8 9"
+  end
+
 end

@@ -36,4 +36,8 @@ defmodule TicTacToe.Game do
     end
   end
 
+  def display_board(current_board) do
+    CliDisplay.write(Messager.format_board(current_board))
+  end
+
 end
