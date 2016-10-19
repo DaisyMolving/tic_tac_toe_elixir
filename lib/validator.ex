@@ -8,8 +8,8 @@ defmodule TicTacToe.Validator do
     :play_again => {~r/[yYnN]/, Messager.play_again_input_failure}
   }
 
-  def validate_name(name_input) do
-    run_validation(name_input, @match_and_failure[:name])
+  def validate_input(user_input, category) do
+    run_validation(user_input, @match_and_failure[category])
   end
 
   def validate_marker(marker_input) do
