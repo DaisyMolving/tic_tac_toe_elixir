@@ -20,24 +20,24 @@ defmodule TicTacToe.Game do
     {player_1, player_2}
   end
 
-  def get_valid_input(request, category) do
+  def display_board(current_board) do
+    CliDisplay.write(Messager.format_board(current_board))
+  end
+
+  defp get_valid_input(request, category) do
     request
     |> CliDisplay.get_stripped_input 
     |> Validator.validate_input(category) 
     |> respond_to_validation(category)
   end
 
-  def respond_to_validation({status, response}, category) do
+  defp respond_to_validation({status, response}, category) do
     case status do
       :ok ->
         response
       :error ->
         get_valid_input(response, category)
     end
-  end
-
-  def display_board(current_board) do
-    CliDisplay.write(Messager.format_board(current_board))
   end
 
 end
