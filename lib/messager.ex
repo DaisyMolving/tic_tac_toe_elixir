@@ -1,5 +1,5 @@
 defmodule TicTacToe.Messager do
-  
+
   def format_board(current_board) do
     Enum.chunk(current_board, 3)
     |> Enum.map(fn(row) ->
