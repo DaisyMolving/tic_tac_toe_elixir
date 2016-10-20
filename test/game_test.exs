@@ -26,4 +26,13 @@ defmodule TicTacToeTest.Game do
     end) =~ "1 2 3\n4 5 6\n7 8 9"
   end
 
+  test "players take turns until someone wins" do
+    current_board = TicTacToe.Board.create_new_board
+    player_1 = TicTacToe.Player.build("gary", "x")
+    player_2 = TicTacToe.Player.build("barry", "o")
+    assert capture_io("1\n2\n5\n4\n9", fn ->
+      TicTacToe.Game.take_turn(current_board, {player_1, player_2}) 
+    end) =~ "Gary won"
+  end
+
 end

@@ -60,14 +60,14 @@ defmodule TicTacToeTest.Board do
   end
 
   test "board marks a cell with given symbol" do
-    assert TicTacToe.Board.mark_cell(["1", "2", "3", "4", "5", "6", "7", "8", "9"], "1", "x") == ["x", "2", "3",
+    assert TicTacToe.Board.mark_cell("1", "x", ["1", "2", "3", "4", "5", "6", "7", "8", "9"])  == ["x", "2", "3",
      "4", "5", "6",
      "7", "8", "9"]
   end
 
   test "board confirms or denies if cell is available" do
-    assert TicTacToe.Board.available_cell?(["1", "2", "3", "o", "5", "x", "7", "8", "9"], "4") == false
-    assert TicTacToe.Board.available_cell?(["1", "2", "3", "o", "5", "x", "7", "8", "9"], "5") == true
+    assert TicTacToe.Board.available_cell?("4", ["1", "2", "3", "o", "5", "x", "7", "8", "9"]) == false
+    assert TicTacToe.Board.available_cell?("5", ["1", "2", "3", "o", "5", "x", "7", "8", "9"]) == true
   end
 
 end
