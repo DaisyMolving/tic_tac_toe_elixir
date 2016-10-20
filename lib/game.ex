@@ -3,7 +3,19 @@ defmodule TicTacToe.Game do
   
   def play_tic_tac_toe do
     welcome_players
-    {player_1, player_2} = build_players
+    decide_game_type
+  end
+
+  def build_human_game do
+    player_1 = build_human_player("Player 1", "x")
+    player_2 = build_human_player("Player 2", "o")
+    current_board = Board.create_new_board
+    take_turn(current_board, {player_1, player_2})
+  end
+
+  def build_computer_game do
+    player_1 = build_human_player("Human", "x")
+    player_2 = Player.build("Computer", "o")
     current_board = Board.create_new_board
     take_turn(current_board, {player_1, player_2})
   end
@@ -12,14 +24,18 @@ defmodule TicTacToe.Game do
     CliDisplay.write(Messager.welcome_introduction)
   end
 
-  def build_players do
-    player_1 = 
-      get_valid_input(Messager.name_input_request("Player 1"), :name)
-      |> Player.build("x")
-    player_2 = 
-      get_valid_input(Messager.name_input_request("Player 2"), :name)
-      |> Player.build("o")
-    {player_1, player_2}
+  def decide_game_type do
+    case game_type? do
+      "a" ->
+        build_human_game
+      "b" ->
+        build_computer_game
+    end
+  end
+
+  def build_human_player(player_number, marker) do
+      get_valid_input(Messager.name_input_request(player_number), :name)
+      |> Player.build(marker)
   end
 
   def display_board(current_board) do
@@ -42,6 +58,11 @@ defmodule TicTacToe.Game do
     else
       :gameover
     end
+  end
+
+  defp game_type? do
+    Messager.game_type_request
+    |> get_valid_input(:game_type)
   end
 
   defp play_again? do

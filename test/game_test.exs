@@ -8,15 +8,15 @@ defmodule TicTacToeTest.Game do
     end) =~ "Welcome to Tic Tac Toe"
   end
 
-  test "builds players" do
-    assert capture_io("Barry\nGary", fn ->
-      TicTacToe.Game.build_players 
-    end) =~ "please input your name: \n\nWelcome Player 2,"
+  test "builds human player" do
+    assert capture_io("Barry", fn ->
+      TicTacToe.Game.build_human_player("Player 1", "x")
+    end) =~ "please input your name:"
   end
 
   test "does not build players until name input is valid" do
-    assert capture_io("123\nBarry\nGary", fn ->
-      TicTacToe.Game.build_players 
+    assert capture_io("£$%\n123\nBarry", fn ->
+      TicTacToe.Game.build_human_player("Player 1", "x")
     end) =~ "invalid name"
   end
 
@@ -35,20 +35,20 @@ defmodule TicTacToeTest.Game do
     end) =~ "Gary won"
   end
 
-  test "given all possible inputs a player can win" do
-    assert capture_io("123\n€#¢\nGary\nBarry\nr\n-2\n1\n2\n5\n4\n9\nI'm done", fn ->
+  test "given all possible inputs in human vs human game a player can win" do
+    assert capture_io("a\n123\n€#¢\nGary\nBarry\nr\n-2\n1\n2\n5\n4\n9\nI'm done", fn ->
       TicTacToe.Game.play_tic_tac_toe
     end) =~ "Gary won!"
   end
 
-  test "given all possible inputs players can draw" do
-    assert capture_io("\nGary\nBarry\n1\n1\n2\n3\n5\n8\n6\n4\n7\n9\nI'm done", fn ->
+  test "given all possible inputs in human vs human game players can draw" do
+    assert capture_io("a\nGary\nBarry\n1\n1\n2\n3\n5\n8\n6\n4\n7\n9\nI'm done", fn ->
       TicTacToe.Game.play_tic_tac_toe
     end) =~ "It's a draw"
   end
 
   test "players can play again" do
-    assert capture_io("yes\nGary\nBarry\n1\n2\n5\n4\n9\ndone", fn -> 
+    assert capture_io("yes\na\nGary\nBarry\n1\n2\n5\n4\n9\ndone", fn -> 
      TicTacToe.Game.decide_to_play_again
     end) =~ "Welcome to Tic Tac Toe"
   end
