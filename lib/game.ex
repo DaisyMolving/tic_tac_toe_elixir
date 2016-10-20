@@ -1,5 +1,5 @@
 defmodule TicTacToe.Game do
-  alias TicTacToe.{Board, Player, Validator, CliDisplay, Messager}
+  alias TicTacToe.{Board, Player, ComputerPlayer, Validator, CliDisplay, Messager}
   
   def play_tic_tac_toe do
     welcome_players
@@ -15,7 +15,7 @@ defmodule TicTacToe.Game do
 
   def build_computer_game do
     player_1 = build_human_player("Human", "x")
-    player_2 = Player.build("Computer", "o")
+    player_2 = %ComputerPlayer{}
     current_board = Board.create_new_board
     take_turn(current_board, {player_1, player_2})
   end
