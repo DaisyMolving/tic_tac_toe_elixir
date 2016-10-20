@@ -22,18 +22,18 @@ defmodule TicTacToe.Game do
     {player_1, player_2}
   end
 
+  def display_board(current_board) do
+    current_board
+    |> Messager.format_board
+    |> CliDisplay.write
+  end
+
   def take_turn(current_board, {player_1, player_2}) do
     if check_for_win_or_draw(current_board, player_2.name) == :continue do
       mark_board(current_board, {player_1, player_2})
     else
       decide_to_play_again
     end
-  end
-
-  def display_board(current_board) do
-    current_board
-    |> Messager.format_board
-    |> CliDisplay.write
   end
 
   def decide_to_play_again do
@@ -46,7 +46,7 @@ defmodule TicTacToe.Game do
 
   defp play_again? do
     Messager.play_again_input_request
-    |> get_valid_input(:play_again)
+    |> CliDisplay.get_stripped_input
   end
 
   defp mark_board(current_board, {player_1, player_2}) do

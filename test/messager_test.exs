@@ -37,7 +37,7 @@ defmodule TicTacToeTest.Messager do
   end
 
   test "returns play again request" do
-    assert TicTacToe.Messager.play_again_input_request =~ "play again?"
+    assert TicTacToe.Messager.play_again_input_request =~ "play again"
   end
 
 end

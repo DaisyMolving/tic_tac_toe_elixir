@@ -38,7 +38,7 @@ defmodule TicTacToe.Messager do
   end
 
   def play_again_input_request do
-    "\nPlayers, would you like to play again? Type y or n:"
+    "\nGameover.\nTo play again please type yes:\n"
   end
 
   def name_input_failure do
@@ -51,10 +51,6 @@ defmodule TicTacToe.Messager do
 
   def turn_input_failure do
     "\nThat is not a valid turn.\n Please input a number corresponding to an unmarked space on the board: "
-  end
-
-  def play_again_input_failure do
-    "\nThat is not a valid answer, please type y for yes or n for no: " 
   end
 
 end
