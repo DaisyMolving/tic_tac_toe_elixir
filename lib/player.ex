@@ -5,4 +5,5 @@ defmodule TicTacToe.Player do
   def build(name, marker) do
     %TicTacToe.Player{name: String.capitalize(name), marker: marker}
   end
+
 end
