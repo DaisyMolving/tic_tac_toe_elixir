@@ -2,6 +2,7 @@ defmodule TicTacToe.Validator do
   alias TicTacToe.Messager
 
   @match_and_failure %{
+    :game_type => {~r/^[ab]$/, Messager.game_type_input_failure},
     :name => {~r/[a-z, A-Z]+/, Messager.name_input_failure},
     :marker => {~r/^(\D)$/, Messager.marker_input_failure},
     :turn => {~r/^([1-9])$/, Messager.turn_input_failure},
