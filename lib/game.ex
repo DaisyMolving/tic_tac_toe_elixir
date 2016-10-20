@@ -34,8 +34,10 @@ defmodule TicTacToe.Game do
   end
 
   def build_human_player(player_number, marker) do
-      get_valid_input(Messager.name_input_request(player_number), :name)
-      |> HumanPlayer.build(marker)
+    Messager.name_input_request(player_number)
+    |> CliDisplay.get_stripped_input 
+    |> get_valid_input(:name)
+    |> HumanPlayer.build(marker)
   end
 
   def display_board(current_board) do
@@ -62,6 +64,7 @@ defmodule TicTacToe.Game do
 
   defp game_type? do
     Messager.game_type_request
+    |> CliDisplay.get_stripped_input 
     |> get_valid_input(:game_type)
   end
 
@@ -72,8 +75,13 @@ defmodule TicTacToe.Game do
 
   defp mark_board(current_board, {player_1, player_2}) do
     display_board(current_board)
-    chosen_cell = choose_cell(player_1)
-    mark_cell_if_available(chosen_cell, current_board, {player_1, player_2})
+    if player_1.name == "Computer" do
+      computer_choose_cell(player_1)
+      |> mark_cell_if_available(current_board, {player_1, player_2})
+    else
+      human_choose_cell(player_1)
+      |> mark_cell_if_available(current_board, {player_1, player_2})
+    end
   end
 
   defp check_for_win_or_draw(current_board, winning_player) do
@@ -101,14 +109,21 @@ defmodule TicTacToe.Game do
     end
   end
 
-  defp choose_cell(player) do
+  defp human_choose_cell(player) do
     Messager.turn_input_request(player.name, player.marker)
+    |> CliDisplay.get_stripped_input 
+    |> get_valid_input(:turn)
+  end
+
+  defp computer_choose_cell(player) do
+    Messager.turn_input_request(player.name, player.marker)
+    |> CliDisplay.write
+    ComputerPlayer.choose_random_number
     |> get_valid_input(:turn)
   end
 
   defp get_valid_input(request, category) do
     request
-    |> CliDisplay.get_stripped_input 
     |> Validator.validate_input(category) 
     |> respond_to_validation(category)
   end
@@ -118,7 +133,9 @@ defmodule TicTacToe.Game do
       :ok ->
         response
       :error ->
-        get_valid_input(response, category)
+        response
+        |> CliDisplay.get_stripped_input
+        |> get_valid_input( category)
     end
   end
 

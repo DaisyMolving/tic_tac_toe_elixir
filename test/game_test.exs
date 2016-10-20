@@ -28,21 +28,21 @@ defmodule TicTacToeTest.Game do
 
   test "players take turns until someone wins" do
     current_board = TicTacToe.Board.create_new_board
-    player_1 = TicTacToe.Player.build("gary", "x")
-    player_2 = TicTacToe.Player.build("barry", "o")
+    player_1 = TicTacToe.HumanPlayer.build("gary", "x")
+    player_2 = TicTacToe.HumanPlayer.build("barry", "o")
     assert capture_io("1\n2\n5\n4\n9\nn", fn ->
       TicTacToe.Game.take_turn(current_board, {player_1, player_2}) 
     end) =~ "Gary won"
   end
 
   test "given all possible inputs in human vs human game a player can win" do
-    assert capture_io("a\n123\n€#¢\nGary\nBarry\nr\n-2\n1\n2\n5\n4\n9\nI'm done", fn ->
+    assert capture_io("y\na\n123\n€#¢\nGary\nBarry\nr\n-2\n1\n2\n5\n4\n9\nI'm done", fn ->
       TicTacToe.Game.play_tic_tac_toe
     end) =~ "Gary won!"
   end
 
   test "given all possible inputs in human vs human game players can draw" do
-    assert capture_io("a\nGary\nBarry\n1\n1\n2\n3\n5\n8\n6\n4\n7\n9\nI'm done", fn ->
+    assert capture_io("5\na\nGary\nBarry\n1\n1\n2\n3\n5\n8\n6\n4\n7\n9\nI'm done", fn ->
       TicTacToe.Game.play_tic_tac_toe
     end) =~ "It's a draw"
   end
