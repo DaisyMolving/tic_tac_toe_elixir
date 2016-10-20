@@ -30,7 +30,7 @@ defmodule TicTacToeTest.Game do
     current_board = TicTacToe.Board.create_new_board
     player_1 = TicTacToe.Player.build("gary", "x")
     player_2 = TicTacToe.Player.build("barry", "o")
-    assert capture_io("1\n2\n5\n4\n9", fn ->
+    assert capture_io("1\n2\n5\n4\n9\nn", fn ->
       TicTacToe.Game.take_turn(current_board, {player_1, player_2}) 
     end) =~ "Gary won"
   end

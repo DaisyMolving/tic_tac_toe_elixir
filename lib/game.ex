@@ -24,15 +24,38 @@ defmodule TicTacToe.Game do
 
   def take_turn(current_board, {player_1, player_2}) do
     if check_for_win_or_draw(current_board, player_2.name) == :continue do
-      display_board(current_board)
-      chosen_cell = choose_cell(player_1)
-      mark_cell_if_available(chosen_cell, current_board, {player_1, player_2})
+      mark_board(current_board, {player_1, player_2})
+    else
+      decide_to_play_again
+    end
+  end
+
+  def display_board(current_board) do
+    current_board
+    |> Messager.format_board
+    |> CliDisplay.write
+  end
+
+  def decide_to_play_again do
+    if play_again? == "yes" do
+      play_tic_tac_toe
     else
       :gameover
     end
   end
 
-  def check_for_win_or_draw(current_board, winning_player) do
+  defp play_again? do
+    Messager.play_again_input_request
+    |> get_valid_input(:play_again)
+  end
+
+  defp mark_board(current_board, {player_1, player_2}) do
+    display_board(current_board)
+    chosen_cell = choose_cell(player_1)
+    mark_cell_if_available(chosen_cell, current_board, {player_1, player_2})
+  end
+
+  defp check_for_win_or_draw(current_board, winning_player) do
     cond do
       Board.win?(current_board) ->
         winning_player
@@ -46,7 +69,7 @@ defmodule TicTacToe.Game do
     end
   end
   
-  def mark_cell_if_available(chosen_cell, current_board, {player_1, player_2}) do
+  defp mark_cell_if_available(chosen_cell, current_board, {player_1, player_2}) do
     case Board.available_cell?(chosen_cell, current_board) do
       true ->
         chosen_cell
@@ -57,13 +80,9 @@ defmodule TicTacToe.Game do
     end
   end
 
-  def choose_cell(player) do
+  defp choose_cell(player) do
     Messager.turn_input_request(player.name, player.marker)
     |> get_valid_input(:turn)
-  end
-
-  def display_board(current_board) do
-    CliDisplay.write(Messager.format_board(current_board))
   end
 
   defp get_valid_input(request, category) do
