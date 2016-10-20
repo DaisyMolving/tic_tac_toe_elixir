@@ -35,4 +35,22 @@ defmodule TicTacToeTest.Game do
     end) =~ "Gary won"
   end
 
+  test "given all possible inputs a player can win" do
+    assert capture_io("123\n€#¢\nGary\nBarry\nr\n-2\n1\n2\n5\n4\n9\nI'm done", fn ->
+      TicTacToe.Game.play_tic_tac_toe
+    end) =~ "Gary won!"
+  end
+
+  test "given all possible inputs players can draw" do
+    assert capture_io("\nGary\nBarry\n\n1\n2\n3\n5\n8\n6\n4\n7\n9\nI'm done", fn ->
+      TicTacToe.Game.play_tic_tac_toe
+    end) =~ "It's a draw"
+  end
+
+  test "players can play again" do
+    assert capture_io("yes\nGary\nBarry\n1\n2\n5\n4\n9\ndone", fn -> 
+     TicTacToe.Game.decide_to_play_again
+    end) =~ "Welcome to Tic Tac Toe"
+  end
+
 end
