@@ -12,6 +12,10 @@ defmodule TicTacToeTest.Messager do
     assert TicTacToe.Messager.welcome_introduction =~ "Welcome to Tic Tac Toe"
   end
 
+  test "returns request for game type" do
+    assert TicTacToe.Messager.game_type_request =~ "a) a human vs human game or b) a human vs computer game"
+  end
+
   test "returns request for name" do
     assert TicTacToe.Messager.name_input_request("Player 1") =~ "Player 1, please input your name"
   end

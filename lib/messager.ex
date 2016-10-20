@@ -13,6 +13,10 @@ defmodule TicTacToe.Messager do
     "\n\nWelcome to Tic Tac Toe, a two player strategy game.\n"
   end
 
+  def game_type_request do
+    "Would you like to play a) a human vs human game or b) a human vs computer game?\n"
+  end
+
   def name_input_request(player_number) do
     "\nWelcome #{player_number}, please input your name: \n"
   end
