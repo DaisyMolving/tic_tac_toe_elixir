@@ -40,6 +40,22 @@ defmodule TicTacToeTest.Messager do
     assert TicTacToe.Messager.congratulate_winner("Barry")  =~ "Barry won! Congratulations!"
   end
 
+  test "returns invalid message for game type" do
+    assert TicTacToe.Messager.game_type_input_failure =~ "not a valid response for game type"
+  end
+
+  test "returns invalid message for name" do
+    assert TicTacToe.Messager.name_input_failure =~ "invalid name"
+  end
+
+  test "returns invalid message for marker" do
+    assert TicTacToe.Messager.marker_input_failure =~ "invalid marker"
+  end
+
+  test "returns invalid message for turn" do
+    assert TicTacToe.Messager.turn_input_failure =~ "not a valid turn"
+  end
+
   test "returns play again request" do
     assert TicTacToe.Messager.play_again_input_request =~ "play again"
   end

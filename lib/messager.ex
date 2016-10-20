@@ -45,6 +45,10 @@ defmodule TicTacToe.Messager do
     "\nGameover.\nTo play again please type yes:\n"
   end
 
+  def game_type_input_failure do
+    "\nThat is not a valid response for game type. Type an (a) for human vs human or a (b) for human vs computer:\n"
+  end
+
   def name_input_failure do
     "\nThat is an invalid name.\n Please try again without using any non-letters: "
   end
