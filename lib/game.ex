@@ -3,19 +3,7 @@ defmodule TicTacToe.Game do
   
   def play_tic_tac_toe do
     welcome_players
-    decide_game_type
-  end
-
-  def build_human_game do
-    player_1 = build_human_player("Player 1", "x")
-    player_2 = build_human_player("Player 2", "o")
-    current_board = Board.create_new_board
-    take_turn(current_board, {player_1, player_2})
-  end
-
-  def build_computer_game do
-    player_1 = build_human_player("Human", "x")
-    player_2 = %ComputerPlayer{}
+    {player_1, player_2} = decide_game_type
     current_board = Board.create_new_board
     take_turn(current_board, {player_1, player_2})
   end
@@ -31,6 +19,18 @@ defmodule TicTacToe.Game do
       "b" ->
         build_computer_game
     end
+  end
+
+  def build_human_game do
+    player_1 = build_human_player("Player 1", "x")
+    player_2 = build_human_player("Player 2", "o")
+    {player_1, player_2}
+  end
+
+  def build_computer_game do
+    player_1 = build_human_player("Human", "x")
+    player_2 = %ComputerPlayer{}
+    {player_1, player_2}
   end
 
   def build_human_player(player_number, marker) do
