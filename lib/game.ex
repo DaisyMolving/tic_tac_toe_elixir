@@ -1,5 +1,5 @@
 defmodule TicTacToe.Game do
-  alias TicTacToe.{Board, Player, ComputerPlayer, Validator, CliDisplay, Messager}
+  alias TicTacToe.{Board, HumanPlayer, ComputerPlayer, Validator, CliDisplay, Messager}
   
   def play_tic_tac_toe do
     welcome_players
@@ -35,7 +35,7 @@ defmodule TicTacToe.Game do
 
   def build_human_player(player_number, marker) do
       get_valid_input(Messager.name_input_request(player_number), :name)
-      |> Player.build(marker)
+      |> HumanPlayer.build(marker)
   end
 
   def display_board(current_board) do
