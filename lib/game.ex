@@ -139,4 +139,10 @@ defmodule TicTacToe.Game do
     end
   end
 
+  # defp respond_to_validation({:ok, response}, _category), do: response
+  # defp respond_to_validation({:error, response}, category) do
+  #     response
+  #     |> CliDisplay.get_stripped_input
+  #     |> get_valid_input(category)
+  # end
 end

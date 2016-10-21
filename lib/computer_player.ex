@@ -5,4 +5,5 @@ defmodule TicTacToe.ComputerPlayer do
   def choose_random_number do
     Integer.to_string(Enum.random(1..9))
   end
+
 end
