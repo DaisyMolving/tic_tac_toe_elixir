@@ -7,10 +7,15 @@ defmodule TicTacToeTest.Validator do
   end
 
   test "returns failure message if game type is invalid" do
-    assert TicTacToe.Validator.validate_input("1", :game_type) == 
+    assert TicTacToe.Validator.validate_input("1", :game_type) ==
       {:error, "\nThat is not a valid response for game type. \nType an (a) for human vs human or a (b) for human vs computer:\n"}
-    assert TicTacToe.Validator.validate_input("aa", :game_type) == 
+    assert TicTacToe.Validator.validate_input("aa", :game_type) ==
       {:error, "\nThat is not a valid response for game type. \nType an (a) for human vs human or a (b) for human vs computer:\n"}
+  end
+
+  test "returns a valid starter" do
+    assert TicTacToe.Validator.validate_input("a", :starter) == {:ok, "a"}
+    assert TicTacToe.Validator.validate_input("b", :starter) == {:ok, "b"}
   end
 
   test "returns valid name" do
@@ -18,9 +23,9 @@ defmodule TicTacToeTest.Validator do
   end
 
   test "returns failure message if name is invalid" do
-    assert TicTacToe.Validator.validate_input("123", :name) == 
+    assert TicTacToe.Validator.validate_input("123", :name) ==
       {:error, "\nThat is an invalid name.\n Please try again without using any non-letters: "}
-    assert TicTacToe.Validator.validate_input("€#¢", :name) == 
+    assert TicTacToe.Validator.validate_input("€#¢", :name) ==
       {:error, "\nThat is an invalid name.\n Please try again without using any non-letters: "}
   end
 
@@ -29,12 +34,12 @@ defmodule TicTacToeTest.Validator do
   end
 
   test "returns failure message if marker is invalid" do
-    assert TicTacToe.Validator.validate_input("3", :marker) == 
+    assert TicTacToe.Validator.validate_input("3", :marker) ==
       {:error, "\nThat is an invalid marker.\n Choose a single character that is not a number: "}
-    assert TicTacToe.Validator.validate_input("$q", :marker) == 
+    assert TicTacToe.Validator.validate_input("$q", :marker) ==
       {:error, "\nThat is an invalid marker.\n Choose a single character that is not a number: "}
   end
-  
+
   test "returns valid turn" do
     assert TicTacToe.Validator.validate_input("1", :turn) == {:ok, "1"}
   end
