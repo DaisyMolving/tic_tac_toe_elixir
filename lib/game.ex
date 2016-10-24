@@ -97,7 +97,7 @@ defmodule TicTacToe.Game do
         :continue
     end
   end
-  
+
   defp mark_cell_if_available(chosen_cell, current_board, {player_1, player_2}) do
     case Board.available_cell?(chosen_cell, current_board) do
       true ->
@@ -111,7 +111,7 @@ defmodule TicTacToe.Game do
 
   defp human_choose_cell(player) do
     Messager.turn_input_request(player.name, player.marker)
-    |> CliDisplay.get_stripped_input 
+    |> CliDisplay.get_stripped_input
     |> get_valid_input(:turn)
   end
 
@@ -124,25 +124,15 @@ defmodule TicTacToe.Game do
 
   defp get_valid_input(request, category) do
     request
-    |> Validator.validate_input(category) 
+    |> Validator.validate_input(category)
     |> respond_to_validation(category)
   end
 
-  defp respond_to_validation({status, response}, category) do
-    case status do
-      :ok ->
-        response
-      :error ->
-        response
-        |> CliDisplay.get_stripped_input
-        |> get_valid_input( category)
-    end
+  defp respond_to_validation({:ok, response}, _category), do: response
+  defp respond_to_validation({:error, response}, category) do
+      response
+      |> CliDisplay.get_stripped_input
+      |> get_valid_input(category)
   end
 
-  # defp respond_to_validation({:ok, response}, _category), do: response
-  # defp respond_to_validation({:error, response}, category) do
-  #     response
-  #     |> CliDisplay.get_stripped_input
-  #     |> get_valid_input(category)
-  # end
 end
