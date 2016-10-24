@@ -25,6 +25,10 @@ defmodule TicTacToe.Messager do
     "\n#{player_name}, please choose a marker of any single character that is not a number: \n"
   end
 
+  def starter_request(player_1, player_2) do
+    "\nWho should start? Should it be a) #{player_1}? or b) #{player_2}?\n"
+  end
+
   def turn_input_request(player_name, marker) do
     "\nIt's #{player_name}'s turn with the marker #{marker}, \ninput the number of the position that you would like to mark: \n"
   end

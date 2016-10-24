@@ -24,6 +24,10 @@ defmodule TicTacToeTest.Messager do
     assert TicTacToe.Messager.marker_input_request("Gary") =~ "Gary, please choose a marker"
   end
 
+  test "returns request for who starts" do
+    assert TicTacToe.Messager.starter_request("Gary", "Barry") =~ "Who should start? Should it be a) Gary? or b) Barry?"
+  end
+
   test "returns request for turn" do
     assert TicTacToe.Messager.turn_input_request("Gary", "x") =~ "Gary's turn with the marker x"
   end
