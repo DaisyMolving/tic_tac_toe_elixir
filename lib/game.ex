@@ -1,11 +1,11 @@
 defmodule TicTacToe.Game do
   alias TicTacToe.{Board, HumanPlayer, ComputerPlayer, Validator, CliDisplay, Messager}
-  
+
   def play_tic_tac_toe do
     welcome_players
     {player_1, player_2} = decide_game_type
     current_board = Board.create_new_board
-    take_turn(current_board, {player_1, player_2})
+    take_turn(current_board, decide_starter({player_1, player_2}))
   end
 
   def welcome_players do
@@ -18,6 +18,15 @@ defmodule TicTacToe.Game do
         build_human_game
       "b" ->
         build_computer_game
+    end
+  end
+
+  def decide_starter({player_1, player_2}) do
+    case starter?(player_1, player_2) do
+      "a" ->
+        {player_1, player_2}
+      "b" ->
+        {player_2, player_1}
     end
   end
 
@@ -64,8 +73,14 @@ defmodule TicTacToe.Game do
 
   defp game_type? do
     Messager.game_type_request
-    |> CliDisplay.get_stripped_input 
+    |> CliDisplay.get_stripped_input
     |> get_valid_input(:game_type)
+  end
+
+  defp starter?(player_1, player_2) do
+    Messager.starter_request(player_1.name, player_2.name)
+    |> CliDisplay.get_stripped_input
+    |> get_valid_input(:starter)
   end
 
   defp play_again? do
