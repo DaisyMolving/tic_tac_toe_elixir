@@ -2,6 +2,13 @@ defmodule TicTacToe.ComputerPlayer do
 
   defstruct name: "Computer", marker: "o"
 
+  def best_move(current_board) do
+    if Enum.member?(current_board, "1") do
+      Enum.find_index(current_board, fn(x) -> x == "1" end) + 1
+      |> Integer.to_string
+    end
+  end
+
   def return_possible_boards(current_board, marker) do
     return_possible_boards([], current_board, current_board, marker)
   end
@@ -23,4 +30,5 @@ defmodule TicTacToe.ComputerPlayer do
   defp ghost_mark(cell, marker, current_board) do
     List.replace_at(current_board, String.to_integer(cell) - 1, marker) 
   end
+
 end
