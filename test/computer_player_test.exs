@@ -12,4 +12,13 @@ defmodule TicTacToeTest.ComputerPlayer do
     assert Enum.member?(list_of_numbers, TicTacToe.ComputerPlayer.choose_random_number)
   end
 
+  test "current player returns possible moves for next turn on one board for each move" do
+    current_board = ["x", "o", "o", "o", "x", "6", "7", "8", "9"]
+    assert TicTacToe.ComputerPlayer.return_possible_boards(current_board, "x") == [
+      ["x", "o", "o", "o", "x", "x", "7", "8", "9"],
+      ["x", "o", "o", "o", "x", "6", "x", "8", "9"],
+      ["x", "o", "o", "o", "x", "6", "7", "x", "9"],
+      ["x", "o", "o", "o", "x", "6", "7", "8", "x"]]
+  end
+
 end
