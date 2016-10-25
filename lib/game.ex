@@ -91,12 +91,16 @@ defmodule TicTacToe.Game do
   defp mark_board(current_board, {player_1, player_2}) do
     display_board(current_board)
     if player_1.name == "Computer" do
-      computer_choose_cell(player_1)
-      |> mark_cell_if_available(current_board, {player_1, player_2})
+      Messager.turn_input_request(player_1.name, player_1.marker)
+      |> CliDisplay.write
     else
       human_choose_cell(player_1)
       |> mark_cell_if_available(current_board, {player_1, player_2})
     end
+  end
+
+  def computer_choose_cell(current_board, {player_1, player_2}) do
+    ComputerPlayer.return_possible_moves(current_board, player_1.marker)
   end
 
   defp check_for_win_or_draw(current_board, winning_player) do
@@ -127,13 +131,6 @@ defmodule TicTacToe.Game do
   defp human_choose_cell(player) do
     Messager.turn_input_request(player.name, player.marker)
     |> CliDisplay.get_stripped_input
-    |> get_valid_input(:turn)
-  end
-
-  defp computer_choose_cell(player) do
-    Messager.turn_input_request(player.name, player.marker)
-    |> CliDisplay.write
-    ComputerPlayer.choose_random_number
     |> get_valid_input(:turn)
   end
 

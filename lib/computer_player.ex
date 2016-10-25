@@ -11,17 +11,17 @@ defmodule TicTacToe.ComputerPlayer do
     end
   end
 
-  def return_possible_boards(current_board, marker) do
-    return_possible_boards([], current_board, current_board, marker)
+  def return_possible_moves(current_board, marker) do
+    return_possible_moves([], current_board, current_board, marker)
   end
 
-  def return_possible_boards(possible_boards, [], _board, _marker), do: possible_boards
-  def return_possible_boards(possible_boards, [head | tail], current_board, marker) do
+  def return_possible_moves(possible_boards, [], _board, _marker), do: possible_boards
+  def return_possible_moves(possible_boards, [head | tail], current_board, marker) do
     if unmarked?(head) do
       List.insert_at(possible_boards, -1, ghost_mark(head, marker, current_board))
-      |> return_possible_boards(tail, current_board, marker)
+      |> return_possible_moves(tail, current_board, marker)
     else
-      return_possible_boards(possible_boards, tail, current_board, marker)
+      return_possible_moves(possible_boards, tail, current_board, marker)
     end
   end
 

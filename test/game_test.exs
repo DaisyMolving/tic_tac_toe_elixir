@@ -61,4 +61,14 @@ defmodule TicTacToeTest.Game do
     end) =~ "Welcome to Tic Tac Toe"
   end
 
+  test "computer responds to board" do
+    current_board = ["o", "x", "x", "o", "x", "x", "7", "o", "9"]
+    player_1 = TicTacToe.HumanPlayer.build("gary", "x")
+    player_2 = TicTacToe.HumanPlayer.build("barry", "o")
+    assert TicTacToe.Game.computer_choose_cell(current_board, {player_1, player_2}) == [
+      ["o", "x", "x", "o", "x", "x", "x", "o", "9"],
+      ["o", "x", "x", "o", "x", "x", "7", "o", "x"]
+      ]
+  end
+
 end
