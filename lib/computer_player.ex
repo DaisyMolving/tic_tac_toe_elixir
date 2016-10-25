@@ -3,9 +3,11 @@ defmodule TicTacToe.ComputerPlayer do
   defstruct name: "Computer", marker: "o"
 
   def best_move(current_board) do
-    if Enum.member?(current_board, "1") do
-      Enum.find_index(current_board, fn(x) -> x == "1" end) + 1
-      |> Integer.to_string
+    cond do
+      Enum.member?(current_board, "1") ->
+        return_cell_number(current_board, "1")
+      Enum.member?(current_board, "-1") ->
+        return_cell_number(current_board, "-1")
     end
   end
 
@@ -29,6 +31,11 @@ defmodule TicTacToe.ComputerPlayer do
 
   defp ghost_mark(cell, marker, current_board) do
     List.replace_at(current_board, String.to_integer(cell) - 1, marker) 
+  end
+
+  defp return_cell_number(current_board, win_or_lose) do
+    Enum.find_index(current_board, fn(x) -> x == win_or_lose end) + 1
+    |> Integer.to_string
   end
 
 end

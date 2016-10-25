@@ -19,6 +19,8 @@ defmodule TicTacToeTest.ComputerPlayer do
   test "current player marks the best possible move" do
     current_board = ["x", "o", "o", "o", "x", "0", "0", "0", "1"]
     assert TicTacToe.ComputerPlayer.best_move(current_board) == "9"
+    current_board = ["o", "0", "0", "-1", "x", "0", "o", "0", "0"]
+    assert TicTacToe.ComputerPlayer.best_move(current_board) == "4"
   end
 
 end
