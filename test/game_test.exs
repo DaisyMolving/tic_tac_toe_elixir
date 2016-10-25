@@ -61,10 +61,4 @@ defmodule TicTacToeTest.Game do
     end) =~ "Welcome to Tic Tac Toe"
   end
 
-  test "given all possible inputs in human vs computer game, someone wins" do
-    assert capture_io("y\nb\n123\n€#¢\nGary\nb\nr\n-2\n1\n5\n9\nI'm done", fn ->
-      TicTacToe.Game.play_tic_tac_toe
-    end) =~ "won!"
-  end
-
 end
