@@ -103,6 +103,20 @@ defmodule TicTacToe.Game do
     ComputerPlayer.return_possible_moves(current_board, player_1.marker)
   end
 
+  def mark_minimax_values([], current_board), do: current_board
+  def mark_minimax_values([head | tail], current_board) do
+    case Board.win?(head) do
+      true ->
+        mark_minimax_values(tail, List.replace_at(current_board, first_free_cell_index(current_board), "one"))
+      false ->
+        mark_minimax_values(tail, List.replace_at(current_board, first_free_cell_index(current_board), "zero"))
+    end
+  end
+
+  defp first_free_cell_index(current_board) do
+    String.to_integer(Enum.find(current_board, fn(x) -> String.match?(x, ~r/[1-9]/) end)) - 1
+  end
+
   defp check_for_win_or_draw(current_board, winning_player) do
     cond do
       Board.win?(current_board) ->
