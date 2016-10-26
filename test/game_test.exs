@@ -61,11 +61,4 @@ defmodule TicTacToeTest.Game do
     end) =~ "Welcome to Tic Tac Toe"
   end
 
-  # test "minimax values are determined" do
-  #   current_board = ["o", "2", "x", "x", "x", "o", "7", "8", "o"]
-  #   player_1 = TicTacToe.HumanPlayer.build("gary", "x")
-  #   player_2 = TicTacToe.HumanPlayer.build("barry", "o")
-  #   assert TicTacToe.Game.minimax(current_board, {player_1, player_2}) == ["o", "zero", "x", "x", "x", "o", "one", "zero", "o"]
-  # end
-
 end
