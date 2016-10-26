@@ -8,12 +8,15 @@ defmodule TicTacToe.Board do
   end
 
   def mark_cell(cell_number, player_marker, current_board) do
-    List.replace_at(current_board, get_cell_index(cell_number), player_marker)
+    List.replace_at(current_board, get_cell_index(current_board, cell_number), player_marker)
   end
 
   def available_cell?(cell_number, current_board) do
-    Enum.at(current_board, get_cell_index(cell_number)) 
-    |> String.match?(~r/[1-9]/)
+    if get_cell_index(current_board, cell_number) == nil do
+      false
+    else
+      true
+    end
   end
 
   def win?(current_board) do
@@ -51,8 +54,10 @@ defmodule TicTacToe.Board do
     [[a1, b2, c3], [a3, b2, c1]]
   end
 
-  defp get_cell_index(cell_number) do
-    String.to_integer(cell_number) - 1
+  defp get_cell_index(current_board, cell_contents) do
+    Enum.find_index(current_board, fn(x) ->
+      x == cell_contents
+    end) 
   end
 
   defp all_same?([x, x, x]), do: true
