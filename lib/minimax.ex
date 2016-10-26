@@ -1,11 +1,13 @@
 defmodule TicTacToe.Minimax do
 
-  def best_move(current_board) do
+  def best_move(current_board, {player_1, player_2}) do
     cond do
-      Enum.member?(current_board, "1") ->
-        return_cell_number(current_board, "1")
-      Enum.member?(current_board, "-1") ->
-        return_cell_number(current_board, "-1")
+      Enum.member?(minimax(current_board, {player_1, player_2}), "one") ->
+        return_cell_number(minimax(current_board, {player_1, player_2}), "one")
+      Enum.member?(minimax(current_board, {player_2, player_1}), "one") ->
+      return_cell_number(minimax(current_board, {player_2, player_1}), "one")
+      :else ->
+        "5"
     end
   end
 

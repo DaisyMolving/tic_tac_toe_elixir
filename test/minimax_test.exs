@@ -17,11 +17,22 @@ defmodule TicTacToeTest.Minimax do
       ["x", "o", "o", "o", "x", "6", "7", "8", "x"]]
   end
 
-  test "current player marks the best possible move" do
-    current_board = ["x", "o", "o", "o", "x", "0", "0", "0", "1"]
-    assert TicTacToe.Minimax.best_move(current_board) == "9"
-    current_board = ["o", "0", "0", "-1", "x", "0", "o", "0", "0"]
-    assert TicTacToe.Minimax.best_move(current_board) == "4"
+  test "current player chooses to win" do
+    current_board = ["x", "o", "o",
+                     "o", "x", "6",
+                     "7", "8", "9"]
+    player_1 = TicTacToe.HumanPlayer.build("Computer", "x")
+    player_2 = TicTacToe.HumanPlayer.build("gary", "o")
+    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "9"
+  end
+
+  test "current player chooses to block" do
+    current_board = ["x", "o", "o",
+                     "4", "x", "6",
+                     "7", "8", "9"]
+    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
+    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
+    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "9"
   end
 
 end

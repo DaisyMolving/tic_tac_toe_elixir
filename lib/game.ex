@@ -93,27 +93,18 @@ defmodule TicTacToe.Game do
     if player_1.name == "Computer" do
       Messager.turn_input_request(player_1.name, player_1.marker)
       |> CliDisplay.write
-      # computer_choose_cell(current_board, {player_1, player_2})
+      computer_mark_cell(current_board, {player_1, player_2})
     else
       human_choose_cell(player_1)
       |> mark_cell_if_available(current_board, {player_1, player_2})
     end
   end
 
-  # def computer_choose_cell(current_board, {player_1, player_2}) do
-  #   case Enum.member?(minimax(current_board, {player_1, player_2}), "one") do
-  #     true ->
-  #       "one"
-  #       |> Board.mark_cell(player_1.marker, current_board)
-  #       |> take_turn({player_2, player_1})
-  #     false ->
-  #       Enum.each(ComputerPlayer.return_possible_moves(current_board, player_1.marker), fn(possible_move) ->
-  #         IO.inspect(possible_move)
-  #         minimax(possible_move, {player_2, player_1})
-  #         |> computer_choose_cell({player_1, player_2})
-  #       end)
-  #   end
-  # end
+  def computer_mark_cell(current_board, {player_1, player_2}) do
+    TicTacToe.Minimax.best_move(current_board, {player_1, player_2})
+    |> Board.mark_cell(player_1.marker, current_board)
+    |> take_turn({player_2, player_1})
+  end
 
   defp check_for_win_or_draw(current_board, winning_player) do
     cond do
