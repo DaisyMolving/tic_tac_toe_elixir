@@ -7,7 +7,10 @@ defmodule TicTacToe.Minimax do
       Enum.member?(minimax(current_board, {player_2, player_1}), "one") ->
       return_cell_number(minimax(current_board, {player_2, player_1}), "one")
       :else ->
-        "5"
+        Enum.each(return_possible_moves(current_board, player_1.marker), fn(possible_move) ->
+          IO.inspect(possible_move)
+          best_move(possible_move, {player_1, player_2})
+        end)
     end
   end
 
