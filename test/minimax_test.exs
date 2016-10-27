@@ -53,4 +53,38 @@ defmodule TicTacToeTest.Minimax do
     assert Enum.member?(["3", "7"], TicTacToe.Minimax.best_move(current_board, {player_1, player_2}))
   end
 
+  test "blocks another alternative fork attempt" do
+    current_board = ["1", "2", "3",
+                     "4", "5", "x",
+                     "7", "x", "o"]
+    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
+    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
+    assert Enum.member?(["5", "4", "2"], TicTacToe.Minimax.best_move(current_board, {player_1, player_2}))
+  end
+
+  test "blocks player while also trying to win" do
+    current_board = ["x", "2", "3",
+                     "o", "5", "x",
+                     "o", "x", "o"]
+    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
+    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
+    assert Enum.member?(["5", "2"], TicTacToe.Minimax.best_move(current_board, {player_1, player_2}))
+  end
+
+  test "computer ends game with a draw" do
+    current_board = ["x", "o", "3",
+                     "o", "x", "x",
+                     "o", "x", "o"]
+    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
+    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
+    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "3"
+  end
+
+  test "knows how many turns to go" do
+    current_board = ["x", "o", "3",
+                     "o", "x", "x",
+                     "o", "x", "o"]
+    assert TicTacToe.Minimax.turns_to_go(current_board) == 1
+  end
+
 end

@@ -4,16 +4,28 @@ defmodule TicTacToe.Minimax do
     result1 = minimax(current_board, {player_1, player_2})
     result2 = minimax(current_board, {player_2, player_1})
     cond do
+      turns_to_go(current_board) == 1 ->
+        Enum.find(current_board, fn(x) ->
+          String.match?(x, ~r/[1-9]/)
+        end)
       Enum.member?(result1, "one") ->
         return_cell_number(minimax(current_board, {player_1, player_2}), "one")
       Enum.member?(result2, "one") ->
       return_cell_number(minimax(current_board, {player_2, player_1}), "one")
       :else ->
-        Enum.map(return_possible_moves(current_board, player_1.marker), fn(possible_move) ->
-          best_move(possible_move, {player_1, player_2})
+        possibilities = Enum.map(return_possible_moves(current_board, player_1.marker), fn(possible_move) ->
+          best_move(possible_move, {player_2, player_1})
         end)
-        |> List.last
+        Enum.find(possibilities, fn(x) -> is_binary(x) end)
     end
+  end
+
+  def turns_to_go(current_board) do
+    Enum.partition(current_board, fn(x) ->
+      String.match?(x, ~r/[1-9]/)
+    end)
+    |> elem(0)
+    |> Enum.count
   end
 
   def minimax(current_board, {player_1, _player_2}) do 
