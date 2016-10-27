@@ -1,20 +1,22 @@
 defmodule TicTacToe.Minimax do
 
   def best_move(current_board, {player_1, player_2}) do
+    result1 = minimax(current_board, {player_1, player_2})
+    result2 = minimax(current_board, {player_2, player_1})
     cond do
-      Enum.member?(minimax(current_board, {player_1, player_2}), "one") ->
+      Enum.member?(result1, "one") ->
         return_cell_number(minimax(current_board, {player_1, player_2}), "one")
-      Enum.member?(minimax(current_board, {player_2, player_1}), "one") ->
+      Enum.member?(result2, "one") ->
       return_cell_number(minimax(current_board, {player_2, player_1}), "one")
       :else ->
-        Enum.each(return_possible_moves(current_board, player_1.marker), fn(possible_move) ->
-          IO.inspect(possible_move)
+        Enum.map(return_possible_moves(current_board, player_1.marker), fn(possible_move) ->
           best_move(possible_move, {player_1, player_2})
         end)
+        |> List.last
     end
   end
 
-  def minimax(current_board, {player_1, _player_2}) do
+  def minimax(current_board, {player_1, _player_2}) do 
     return_possible_moves(current_board, player_1.marker)
     |> mark_minimax_values(current_board)
   end

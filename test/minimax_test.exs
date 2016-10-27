@@ -41,6 +41,16 @@ defmodule TicTacToeTest.Minimax do
                      "7", "8", "x"]
     player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
     player_2 = TicTacToe.HumanPlayer.build("gary", "x")
-    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "3"
-    end
+
+    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "2"
+  end
+
+  test "blocks another fork attempt" do
+    current_board = ["x", "2", "3",
+                     "4", "x", "6",
+                     "7", "8", "o"]
+    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
+    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
+    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "7"
+  end
 end
