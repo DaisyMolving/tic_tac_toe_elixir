@@ -80,11 +80,11 @@ defmodule TicTacToeTest.Minimax do
     assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "3"
   end
 
-  test "knows how many turns to go" do
+  test "knows when last turn" do
     current_board = ["x", "o", "3",
                      "o", "x", "x",
                      "o", "x", "o"]
-    assert TicTacToe.Minimax.turns_to_go(current_board) == 1
+    assert TicTacToe.Minimax.last_turn?(current_board) == true 
   end
 
 end
