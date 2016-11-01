@@ -102,7 +102,7 @@ defmodule TicTacToe.Game do
   end
 
   def computer_mark_cell(current_board, {player_1, player_2}) do
-    TicTacToe.Minimax.best_move(current_board, {player_1, player_2})
+    ComputerPlayer.computer_move(current_board, {player_1, player_2})
     |> Board.mark_cell(player_1.marker, current_board)
     |> take_turn({player_2, player_1})
   end
