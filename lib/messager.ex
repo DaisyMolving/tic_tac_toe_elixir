@@ -14,7 +14,7 @@ defmodule TicTacToe.Messager do
   end
 
   def game_type_request do
-    "Would you like to play a) a human vs human game or b) a human vs computer game?\n"
+    "Would you like to play \na) a human vs human game \nb) a human vs computer game?\nc) a computer vs human game?\nd) computer vs computer game?"
   end
 
   def name_input_request(player_number) do

@@ -13,7 +13,7 @@ defmodule TicTacToeTest.Messager do
   end
 
   test "returns request for game type" do
-    assert TicTacToe.Messager.game_type_request =~ "a) a human vs human game or b) a human vs computer game"
+    assert TicTacToe.Messager.game_type_request =~ "a) a human vs human game \nb) a human vs computer game"
   end
 
   test "returns request for name" do
