@@ -20,13 +20,13 @@ defmodule TicTacToe.Minimax do
 
   def place_last_marker(current_board) do
     Enum.find(current_board, fn(x) ->
-      String.match?(x, ~r/[1-9]/)
+      String.match?(x, ~r/^[1-9]$/)
     end)
   end
 
   def last_turn?(current_board) do
     Enum.partition(current_board, fn(x) ->
-      String.match?(x, ~r/[1-9]/)
+      String.match?(x, ~r/^[1-9]$/)
     end)
     |> elem(0)
     |> Enum.count == 1
@@ -62,17 +62,23 @@ defmodule TicTacToe.Minimax do
   end
 
   defp first_free_cell_index(current_board) do
-    String.to_integer(Enum.find(current_board, fn(x) ->
-          String.match?(x, ~r/[1-9]/)
-        end)) - 1
+    Enum.find_index(current_board, fn(x) ->
+      String.match?(x, ~r/^[1-9]$/)
+    end)
   end
 
   defp unmarked?(cell) do
-    String.match?(cell, ~r/[1-9]/)
+    String.match?(cell, ~r/^[1-9]$/)
   end
 
   defp ghost_mark(cell, marker, current_board) do
-    List.replace_at(current_board, String.to_integer(cell) - 1, marker) 
+    List.replace_at(current_board, get_index(current_board, cell), marker) 
+  end
+
+  defp get_index(current_board, cell_contents) do
+    Enum.find_index(current_board, fn(x) ->
+      x == cell_contents
+    end)
   end
 
   defp return_cell_number(current_board, win_or_lose) do

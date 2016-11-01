@@ -26,26 +26,26 @@ defmodule TicTacToe.Game do
   end
 
   def build_human_human_game do
-    player_1 = build_human_player("Player 1", "x")
-    player_2 = build_human_player("Player 2", "o")
+    player_1 = build_human_player("Player 1", "\e[36mx\e[0m")
+    player_2 = build_human_player("Player 2", "\e[33mo\e[0m")
     {player_1, player_2}
   end
 
   def build_human_computer_game do
-    player_1 = build_human_player("Human", "x")
+    player_1 = build_human_player("Human", "\e[36mx\e[0m")
     player_2 = %ComputerPlayer{}
     {player_1, player_2}
   end
 
   def build_computer_human_game do
     player_1 = %ComputerPlayer{}
-    player_2 = build_human_player("Human", "x")
+    player_2 = build_human_player("Human", "\e[36mx\e[0m")
     {player_1, player_2}
   end
 
   def build_computer_computer_game do
-    player_1 = ComputerPlayer.build("Computer 1", "x")
-    player_2 = ComputerPlayer.build("Computer 2", "o")
+    player_1 = ComputerPlayer.build("Computer 1", "\e[36mx\e[0m")
+    player_2 = ComputerPlayer.build("Computer 2", "\e[33mo\e[0m")
     {player_1, player_2}
   end
 
