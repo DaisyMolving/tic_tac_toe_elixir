@@ -44,8 +44,8 @@ defmodule TicTacToe.Game do
   end
 
   def build_computer_computer_game do
-    player_1 = %ComputerPlayer{}
-    player_2 = %ComputerPlayer{}
+    player_1 = ComputerPlayer.build("Computer 1", "x")
+    player_2 = ComputerPlayer.build("Computer 2", "o")
     {player_1, player_2}
   end
 
@@ -82,12 +82,6 @@ defmodule TicTacToe.Game do
     Messager.game_type_request
     |> CliDisplay.get_stripped_input
     |> get_valid_input(:game_type)
-  end
-
-  defp starter?(player_1, player_2) do
-    Messager.starter_request(player_1.name, player_2.name)
-    |> CliDisplay.get_stripped_input
-    |> get_valid_input(:starter)
   end
 
   defp play_again? do
