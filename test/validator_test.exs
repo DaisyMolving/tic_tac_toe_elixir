@@ -4,6 +4,8 @@ defmodule TicTacToeTest.Validator do
   test "returns a valid game type" do
     assert TicTacToe.Validator.validate_input("a", :game_type) == {:ok, "a"}
     assert TicTacToe.Validator.validate_input("b", :game_type) == {:ok, "b"}
+    assert TicTacToe.Validator.validate_input("c", :game_type) == {:ok, "c"}
+    assert TicTacToe.Validator.validate_input("d", :game_type) == {:ok, "d"}
   end
 
   test "returns failure message if game type is invalid" do
@@ -11,11 +13,6 @@ defmodule TicTacToeTest.Validator do
       {:error, "\nThat is not a valid response for game type. \nType an (a) for human vs human or a (b) for human vs computer:\n"}
     assert TicTacToe.Validator.validate_input("aa", :game_type) ==
       {:error, "\nThat is not a valid response for game type. \nType an (a) for human vs human or a (b) for human vs computer:\n"}
-  end
-
-  test "returns a valid starter" do
-    assert TicTacToe.Validator.validate_input("a", :starter) == {:ok, "a"}
-    assert TicTacToe.Validator.validate_input("b", :starter) == {:ok, "b"}
   end
 
   test "returns valid name" do

@@ -5,7 +5,7 @@ defmodule TicTacToe.Game do
     welcome_players
     {player_1, player_2} = decide_game_type
     current_board = Board.create_new_board
-    take_turn(current_board, decide_starter({player_1, player_2}))
+    take_turn(current_board, {player_1, player_2})
   end
 
   def welcome_players do
@@ -15,29 +15,36 @@ defmodule TicTacToe.Game do
   def decide_game_type do
     case game_type? do
       "a" ->
-        build_human_game
+        build_human_human_game
       "b" ->
-        build_computer_game
+        build_human_computer_game
+      "c" ->
+        build_computer_human_game
+      "d" ->
+        build_computer_computer_game
     end
   end
 
-  def decide_starter({player_1, player_2}) do
-    case starter?(player_1, player_2) do
-      "a" ->
-        {player_1, player_2}
-      "b" ->
-        {player_2, player_1}
-    end
-  end
-
-  def build_human_game do
+  def build_human_human_game do
     player_1 = build_human_player("Player 1", "x")
     player_2 = build_human_player("Player 2", "o")
     {player_1, player_2}
   end
 
-  def build_computer_game do
+  def build_human_computer_game do
     player_1 = build_human_player("Human", "x")
+    player_2 = %ComputerPlayer{}
+    {player_1, player_2}
+  end
+
+  def build_computer_human_game do
+    player_1 = %ComputerPlayer{}
+    player_2 = build_human_player("Human", "x")
+    {player_1, player_2}
+  end
+
+  def build_computer_computer_game do
+    player_1 = %ComputerPlayer{}
     player_2 = %ComputerPlayer{}
     {player_1, player_2}
   end

@@ -20,14 +20,6 @@ defmodule TicTacToeTest.Game do
     end) =~ "invalid name"
   end
 
-  test "order of players to start is determined" do
-    player_1 = TicTacToe.HumanPlayer.build("gary", "x")
-    player_2 = TicTacToe.HumanPlayer.build("barry", "o")
-    assert capture_io("a", fn ->
-      TicTacToe.Game.decide_starter({player_1, player_2}) == {player_1, player_2}
-    end) =~ "a) Gary? or b) Barry?"
-  end
-
   test "displays the board" do
     assert capture_io(fn ->
       TicTacToe.Game.display_board(["1", "2", "3", "4", "5", "6", "7", "8", "9"])
