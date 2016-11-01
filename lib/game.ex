@@ -91,7 +91,7 @@ defmodule TicTacToe.Game do
 
   defp mark_board(current_board, {player_1, player_2}) do
     display_board(current_board)
-    if player_1.name == "Computer" do
+    if player_1.name =~ "Computer" do
       Messager.turn_input_request(player_1.name, player_1.marker)
       |> CliDisplay.write
       computer_mark_cell(current_board, {player_1, player_2})
@@ -113,9 +113,11 @@ defmodule TicTacToe.Game do
         winning_player
         |> Messager.congratulate_winner
         |> CliDisplay.write
+        display_board(current_board)
       Board.draw?(current_board) ->
         Messager.draw_message
         |> CliDisplay.write
+        display_board(current_board)
       :else ->
         :continue
     end
