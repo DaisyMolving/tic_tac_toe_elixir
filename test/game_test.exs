@@ -61,10 +61,18 @@ defmodule TicTacToeTest.Game do
     end) =~ "Computer 1's turn"
   end
 
-  # test "keeps score until game is over" do
-  #   assert capture_io("y\na\n123\n€#¢\nGary\nBarry\na\nr\n-2\n1\n2\n5\n4\n9\nI'm done", fn ->
-  #     TicTacToe.Game.play_tic_tac_toe
-  #   end) =~ "Gary: 1"
-  # end
+  test "shows score when one game ends" do
+    assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nI'm done", fn ->
+      TicTacToe.Game.play_tic_tac_toe
+    end) =~ "Gary: 1"
+  end
+
+  test "keeps score for multiple running games" do
+    assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nyes\n8\n1\n2\n5\n4\n9\nI'm done", fn ->
+      TicTacToe.Game.play_tic_tac_toe
+    end) =~ "Gary: 2"
+  end
+
+
 
 end

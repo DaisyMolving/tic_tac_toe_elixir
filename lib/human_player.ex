@@ -6,8 +6,8 @@ defmodule TicTacToe.HumanPlayer do
     %TicTacToe.HumanPlayer{name: String.capitalize(name), marker: marker}
   end
 
-  def update_score(updated_score) do
-    %TicTacToe.HumanPlayer{score: updated_score}
+  def update_score(name, marker, updated_score) do
+    %TicTacToe.HumanPlayer{name: name, marker: marker, score: updated_score}
   end
 
 end

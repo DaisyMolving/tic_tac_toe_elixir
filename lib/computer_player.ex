@@ -11,5 +11,9 @@ defmodule TicTacToe.ComputerPlayer do
     TicTacToe.Minimax.best_move(current_board, {player_1, player_2})
   end
 
+  def update_score(name, marker, updated_score) do
+    %TicTacToe.HumanPlayer{name: name, marker: marker, score: updated_score}
+  end
+
 end
 

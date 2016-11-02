@@ -67,10 +67,13 @@ defmodule TicTacToe.Game do
   end
 
   def take_turn(current_board, {player_1, player_2}) do
-    if check_for_win_or_draw(current_board, player_2.name) == :continue do
-      mark_board(current_board, {player_1, player_2})
-    else
-      decide_to_play_again({player_1, player_2})
+    case check_for_win_or_draw(current_board, player_2.name) do
+      :continue ->
+        mark_board(current_board, {player_1, player_2})
+      :winner ->
+        decide_to_play_again({player_1, award_point(player_2)})
+      :draw ->
+        decide_to_play_again({player_1, player_2})
     end
   end
 
@@ -79,9 +82,15 @@ defmodule TicTacToe.Game do
       welcome_players
       start_new_game({player_1, player_2})
     else
+      state_final_score({player_1, player_2})
       :gameover
     end
   end
+
+  def state_final_score({player_1, player_2}) do
+    CliDisplay.write(Messager.final_score_message({player_1, player_2}))
+  end
+
 
   defp game_type? do
     Messager.game_type_request
@@ -119,12 +128,22 @@ defmodule TicTacToe.Game do
         |> Messager.congratulate_winner
         |> CliDisplay.write
         display_board(current_board)
+        :winner
       Board.draw?(current_board) ->
         Messager.draw_message
         |> CliDisplay.write
         display_board(current_board)
+        :draw
       :else ->
         :continue
+    end
+  end
+
+  def award_point(winning_player) do
+    if winning_player.name =~ "Computer" do
+      ComputerPlayer.update_score(winning_player.name, winning_player.marker, winning_player.score + 1)
+    else
+      HumanPlayer.update_score(winning_player.name, winning_player.marker, winning_player.score + 1)
     end
   end
 
