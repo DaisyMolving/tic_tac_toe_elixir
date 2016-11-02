@@ -4,6 +4,10 @@ defmodule TicTacToe.Game do
   def play_tic_tac_toe do
     welcome_players
     {player_1, player_2} = decide_game_type
+    start_new_game({player_1, player_2})
+  end
+
+  def start_new_game({player_1, player_2}) do
     current_board = Board.create_new_board
     take_turn(current_board, {player_1, player_2})
   end
@@ -33,12 +37,12 @@ defmodule TicTacToe.Game do
 
   def build_human_computer_game do
     player_1 = build_human_player("Human", "\e[36mx\e[0m")
-    player_2 = %ComputerPlayer{}
+    player_2 = ComputerPlayer.build("Computer", "\e[33mo\e[0m")
     {player_1, player_2}
   end
 
   def build_computer_human_game do
-    player_1 = %ComputerPlayer{}
+    player_1 = ComputerPlayer.build("Computer", "\e[33mo\e[0m")
     player_2 = build_human_player("Human", "\e[36mx\e[0m")
     {player_1, player_2}
   end
@@ -66,13 +70,13 @@ defmodule TicTacToe.Game do
     if check_for_win_or_draw(current_board, player_2.name) == :continue do
       mark_board(current_board, {player_1, player_2})
     else
-      decide_to_play_again
+      decide_to_play_again({player_1, player_2})
     end
   end
 
-  def decide_to_play_again do
+  def decide_to_play_again({player_1, player_2}) do
     if play_again? == "yes" do
-      play_tic_tac_toe
+      start_new_game({player_1, player_2})
     else
       :gameover
     end

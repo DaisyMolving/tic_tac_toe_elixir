@@ -1,6 +1,6 @@
 defmodule TicTacToe.ComputerPlayer do
 
-  defstruct name: "Computer", marker: "o", colour: "\e[33m"
+  defstruct name: "Computer", marker: "o", score: 0
 
   def build(name, marker) do
     %TicTacToe.HumanPlayer{name: name, marker: marker}
