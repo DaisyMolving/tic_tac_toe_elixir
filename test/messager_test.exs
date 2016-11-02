@@ -64,4 +64,10 @@ defmodule TicTacToeTest.Messager do
     assert TicTacToe.Messager.play_again_input_request =~ "play again"
   end
 
+  test "returns final score message" do
+    player_1 = TicTacToe.ComputerPlayer.build("Computer", "o")
+    player_2 = TicTacToe.HumanPlayer.build("Gary", "x")
+    assert TicTacToe.Messager.final_score_message({player_1, player_2}) =~ "Computer: 0\n Gary: 0"
+  end
+
 end

@@ -52,7 +52,7 @@ defmodule TicTacToeTest.Game do
     player_2 = TicTacToe.HumanPlayer.build("barry", "o")
     assert capture_io("yes\n1\n2\n5\n4\n9\ndone", fn -> 
      TicTacToe.Game.decide_to_play_again({player_1, player_2})
-    end) =~ "It's Gary's turn"
+    end) =~ "Welcome to Tic Tac Toe"
   end
 
   test "a computer vs computer game plays" do

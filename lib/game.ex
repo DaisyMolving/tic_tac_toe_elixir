@@ -76,6 +76,7 @@ defmodule TicTacToe.Game do
 
   def decide_to_play_again({player_1, player_2}) do
     if play_again? == "yes" do
+      welcome_players
       start_new_game({player_1, player_2})
     else
       :gameover
