@@ -66,6 +66,6 @@ defmodule TicTacToe.Messager do
   end
 
   def final_score_message({player_1, player_2}) do
-    "\nThe final score is:\n\n #{player_1.name}: #{player_1.score}\n #{player_2.name}: #{player_2.score}\n"
+    "\nThe final score is:\n\n #{player_2.name}: #{player_2.score}\n #{player_1.name}: #{player_1.score}\n\n\n"
   end
 end
