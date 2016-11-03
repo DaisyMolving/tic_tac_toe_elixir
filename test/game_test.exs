@@ -73,6 +73,4 @@ defmodule TicTacToeTest.Game do
     end) =~ "Gary: 2"
   end
 
-
-
 end

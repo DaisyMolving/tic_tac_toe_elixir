@@ -7,7 +7,7 @@ defmodule TicTacToe.ComputerPlayer do
   end
 
   def computer_move(current_board, {player_1, player_2}) do
-    System.cmd("sleep", ["1"])
+    :timer.sleep(1000)
     TicTacToe.Minimax.best_move(current_board, {player_1, player_2})
   end
 
