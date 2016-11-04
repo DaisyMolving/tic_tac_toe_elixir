@@ -3,7 +3,7 @@ defmodule TicTacToe.ComputerPlayer do
   defstruct name: "Computer", marker: "o", score: 0
 
   def build(name, marker) do
-    %TicTacToe.HumanPlayer{name: name, marker: marker}
+    %TicTacToe.ComputerPlayer{name: name, marker: marker}
   end
 
   def computer_move(current_board, {player_1, player_2}) do
@@ -11,8 +11,8 @@ defmodule TicTacToe.ComputerPlayer do
     TicTacToe.Minimax.best_move(current_board, {player_1, player_2})
   end
 
-  def update_score(name, marker, updated_score) do
-    %TicTacToe.HumanPlayer{name: name, marker: marker, score: updated_score}
+  def update_score(player) do
+    %TicTacToe.ComputerPlayer{name: player.name, marker: player.marker, score: player.score + 1}
   end
 
 end

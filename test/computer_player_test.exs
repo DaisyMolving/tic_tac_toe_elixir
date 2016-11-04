@@ -7,4 +7,8 @@ defmodule TicTacToeTest.ComputerPlayer do
     assert new_player.marker == "o"
   end
 
+  test "computer player updates score" do
+    computer_player = TicTacToe.ComputerPlayer.build("Computer", "x")
+    assert TicTacToe.ComputerPlayer.update_score(computer_player) == %TicTacToe.ComputerPlayer{marker: "x", name: "Computer", score: 1}
+  end
 end

@@ -141,7 +141,7 @@ defmodule TicTacToe.Game do
 
   def award_point(winning_player) do
     if winning_player.name =~ "Computer" do
-      ComputerPlayer.update_score(winning_player.name, winning_player.marker, winning_player.score + 1)
+      ComputerPlayer.update_score(winning_player)
     else
       HumanPlayer.update_score(winning_player.name, winning_player.marker, winning_player.score + 1)
     end
