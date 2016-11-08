@@ -20,9 +20,9 @@ defmodule TicTacToe.Minimax do
   def find_values(current_board, max_player) do
     Enum.map(possible_moves(current_board, max_player), fn(possible_board) ->
       if TicTacToe.Board.win?(possible_board) do
-        {1, "1"}
+        {1, changed_cell(current_board, possible_board)} 
       else
-        {0, "3"}
+        {0, changed_cell(current_board, possible_board)} 
       end
     end)
     # for every available cell on the board return a new board with that cell marked, and determine whether a win for max_player or draw and return these tuples of minimax value and cell number in a list.
@@ -46,6 +46,13 @@ defmodule TicTacToe.Minimax do
 
   def ghost_mark(cell, marker, current_board) do
     List.replace_at(current_board, String.to_integer(cell) - 1, marker)
+  end
+
+  def changed_cell(current_board, marked_board) do
+    Enum.find(Enum.zip(current_board, marked_board), fn({x, y}) ->
+      x != y
+    end)
+  |> elem(0)
   end
     
 end

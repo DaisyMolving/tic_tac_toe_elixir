@@ -14,6 +14,11 @@ defmodule TicTacToeTest.Minimax do
                      "o", "x", "o"]
     max_player = TicTacToe.HumanPlayer.build("Computer", "o")
     assert TicTacToe.Minimax.find_values(current_board, max_player) == [{1, "1"}, {0, "3"}]
+    current_board = ["1", "o", "3",
+                     "o", "5", "x",
+                     "o", "x", "o"]
+    max_player = TicTacToe.HumanPlayer.build("Computer", "o")
+    assert TicTacToe.Minimax.find_values(current_board, max_player) == [{1, "1"}, {0, "3"}, {0, "5"}]
   end
 
   # test "computer marks only remaining available space" do
