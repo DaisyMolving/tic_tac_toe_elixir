@@ -1,15 +1,32 @@
 defmodule TicTacToe.Minimax do
 
-  def best_move(current_board, {max_player, min_player}) do
-    elem(minimax(current_board, {max_player, min_player}), 1)
+  def best_move(current_board, {player_1, player_2}) do
+    minimax(current_board, 0, {player_1, player_2}, true, 100)
   end
 
-  def minimax(current_board, {max_player, min_player}) do
+  def minimax(current_board, depth, {player_1, player_2}, maximising_player, best_value) do
     cond do
-      terminal?(find_values(current_board, max_player)) ->
-        give_terminal_value(find_values(current_board, max_player))
+      terminal?(find_values(current_board, player_1)) ->
+        give_terminal_value(find_values(current_board, player_1))
+      maximising_player ->
+        val = Enum.map(possible_moves(current_board, player_1), fn(possible_move) ->
+          minimax(possible_move, depth - 1, {player_2, player_1}, false, -best_value)
+        end)
+      |> Enum.max
+      max(best_value, elem(val, 0))
+      :else ->
+        val = Enum.map(possible_moves(current_board, player_1), fn(possible_move) ->
+          minimax(possible_move, depth - 1, {player_1, player_2}, true, best_value)
+        end)
+      |> Enum.max
+      # |> negate
+      min(best_value, elem(val, 0))
     end
   end
+
+  # def negate({score, cell}) do
+  #   {-score, cell}
+  # end
 
   def terminal?(minimax_values) do
     Enum.count(minimax_values) == 1 or Enum.any?(minimax_values, fn({value, _}) ->
@@ -18,15 +35,11 @@ defmodule TicTacToe.Minimax do
   end
 
   def give_terminal_value(minimax_values) do
-    if Enum.count(minimax_values) == 1 do
-      Enum.at(minimax_values, 0)
-    else
-      Enum.max(minimax_values)
-    end
+    Enum.max(minimax_values)
   end
 
-  def find_values(current_board, max_player) do
-    Enum.map(possible_moves(current_board, max_player), fn(possible_board) ->
+  def find_values(current_board, player_1) do
+    Enum.map(possible_moves(current_board, player_1), fn(possible_board) ->
       if TicTacToe.Board.win?(possible_board) do
         {1, changed_cell(current_board, possible_board)} 
       else
@@ -35,9 +48,9 @@ defmodule TicTacToe.Minimax do
     end)
   end
 
-  def possible_moves(current_board, max_player) do
+  def possible_moves(current_board, player_1) do
     Enum.map(available_cells(current_board), fn(cell_to_mark) ->
-      ghost_mark(cell_to_mark, max_player.marker, current_board)
+      ghost_mark(cell_to_mark, player_1.marker, current_board)
     end)
   end
 
@@ -61,5 +74,5 @@ defmodule TicTacToe.Minimax do
     end)
     |> elem(0)
   end
-    
+
 end
