@@ -12,19 +12,6 @@ defmodule TicTacToeTest.Minimax do
     assert TicTacToe.Minimax.best_move(current_board, "x") == "1"
   end
 
-  test "gives possible_boards" do
-    current_board = ["1", "o", "3"]
-    assert TicTacToe.Minimax.possible_boards(current_board, "x") == [["x", "o", "3"],["1", "o", "x"]]
-  end
-
-  test "returns values of board" do
-    current_board = ["1", "o", "3",
-                     "4", "x", "6",
-                     "o", "8", "x"]
-    possible_boards = TicTacToe.Minimax.possible_boards(current_board, "x")
-    assert TicTacToe.Minimax.values(possible_boards, current_board) == [{1, "1"}, {0, "3"}, {0, "4"}, {0, "6"}, {0, "8"}]
-  end
-
   test "returns best move when terminal due to win" do
     current_board =   ["x", "o", "3",
                       "4", "x", "6",
@@ -34,6 +21,14 @@ defmodule TicTacToeTest.Minimax do
                       "4", "x", "6",
                       "o", "8", "x"]
     assert TicTacToe.Minimax.best_move(current_board, "x") == "1"
+  end
+
+  test "returns values of board" do
+    current_board =   ["1", "o", "3",
+                      "4", "x", "6",
+                      "o", "8", "x"]
+    possible_boards = TicTacToe.Minimax.possible_boards(current_board, "x")
+    assert TicTacToe.Minimax.values(possible_boards, current_board) == [{0, "1"}, {0, "3"}, {0, "4"}, {0, "6"}, {0, "8"}]
   end
 
 end
