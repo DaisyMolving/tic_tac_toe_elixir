@@ -22,10 +22,17 @@ defmodule TicTacToe.Minimax do
   end
 
   def terminal_win(current_board, current_marker) do
-    values(possible_boards(current_board, current_marker), current_board)
+    Enum.any?(values(current_board, current_marker), fn({value, cell}) ->
+      value == 1
+    end)
   end
 
-  def values(possible_boards, current_board) do
+  def values(current_board, current_marker) do
+    possible_boards(current_board, current_marker)
+    |> evaluate(current_board)
+  end
+
+  def evaluate(possible_boards, current_board) do
     Enum.map(possible_boards, fn(possible_board) ->
       if TicTacToe.Board.win?(possible_board) do
         {1, changed_cell(current_board, possible_board)}
@@ -56,7 +63,7 @@ defmodule TicTacToe.Minimax do
   def terminal_cell(current_board, current_marker) do
     current_board
     |> possible_boards(current_marker)
-    |> values(current_board)
+    |> evaluate(current_board)
     |> Enum.max
     |> elem(1)
   end

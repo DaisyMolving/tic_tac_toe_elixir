@@ -22,7 +22,7 @@ defmodule TicTacToeTest.Minimax do
                      "4", "x", "6",
                      "o", "8", "x"]
     possible_boards = TicTacToe.Minimax.possible_boards(current_board, "x")
-    assert TicTacToe.Minimax.values(possible_boards, current_board) == [{1, "1"}, {0, "3"}, {0, "4"}, {0, "6"}, {0, "8"}]
+    assert TicTacToe.Minimax.evaluate(possible_boards, current_board) == [{1, "1"}, {0, "3"}, {0, "4"}, {0, "6"}, {0, "8"}]
   end
 
   test "returns best move when terminal due to win" do
@@ -35,5 +35,12 @@ defmodule TicTacToeTest.Minimax do
                       "o", "8", "x"]
     assert TicTacToe.Minimax.best_move(current_board, "x") == "1"
   end
+
+  # test "returns best move for blocking win of opponent" do
+  #   current_board =   ["1", "2", "3",
+  #                     "4", "x", "o",
+  #                     "o", "8", "x"]
+  #   assert TicTacToe.Minimax.best_move(current_board, "o") == "1"
+  # end
 
 end
