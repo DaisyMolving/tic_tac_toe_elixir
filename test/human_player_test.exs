@@ -13,4 +13,9 @@ defmodule TicTacToeTest.HumanPlayer do
     assert new_player.marker == "o"
   end
 
+  test "human player updates score" do
+    human_player = TicTacToe.ComputerPlayer.build("Daisy", "x")
+    assert TicTacToe.HumanPlayer.update_score(human_player) == %TicTacToe.HumanPlayer{marker: "x", name: "Daisy", score: 1}
+  end
+
 end
