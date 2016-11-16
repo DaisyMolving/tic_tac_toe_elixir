@@ -1,90 +1,111 @@
 defmodule TicTacToeTest.Minimax do
   use ExUnit.Case
 
-  test "minimax values are determined" do
-    current_board = ["o", "2", "x", "x", "x", "o", "7", "8", "o"]
-    player_1 = TicTacToe.HumanPlayer.build("Computer", "x")
-    player_2 = TicTacToe.HumanPlayer.build("gary", "o")
-    assert TicTacToe.Minimax.minimax(current_board, {player_1, player_2}) == ["o", "zero", "x", "x", "x", "o", "one", "zero", "o"]
+  test "scores win as 1" do
+    current_board =  ["1", "2", "x",
+                      "o", "x", "6",
+                      "x", "o", "9"]
+
+    assert TicTacToe.Minimax.minimax(current_board, "o", true) == -1
+    assert TicTacToe.Minimax.minimax(current_board, "o", false) == 1
   end
 
-  test "current player returns possible moves for next turn on one board for each move" do
-    current_board = ["x", "o", "o", "o", "x", "6", "7", "8", "9"]
-    assert TicTacToe.Minimax.return_possible_moves(current_board, "x") == [
-      ["x", "o", "o", "o", "x", "x", "7", "8", "9"],
-      ["x", "o", "o", "o", "x", "6", "x", "8", "9"],
-      ["x", "o", "o", "o", "x", "6", "7", "x", "9"],
-      ["x", "o", "o", "o", "x", "6", "7", "8", "x"]]
+  test "scores draw as 0" do
+    current_board =  ["x", "x", "o",
+                      "o", "o", "x",
+                      "x", "x", "o"]
+
+    assert TicTacToe.Minimax.minimax(current_board, "x", true) == 0
+    assert TicTacToe.Minimax.minimax(current_board, "x", false) == 0
   end
 
-  test "current player chooses to win" do
-    current_board = ["x", "o", "o",
-                     "o", "x", "6",
-                     "7", "8", "9"]
-    player_1 = TicTacToe.HumanPlayer.build("Computer", "x")
-    player_2 = TicTacToe.HumanPlayer.build("gary", "o")
-    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "9"
+  test "scores possible win as a 1" do
+    current_board =  ["1", "o", "o",
+                      "x", "x", "o",
+                      "x", "o", "x"]
+
+    assert TicTacToe.Minimax.minimax(current_board, "x", true) == 1
+    assert TicTacToe.Minimax.minimax(current_board, "x", false) == -1
   end
 
-  test "current player chooses to block" do
-    current_board = ["x", "o", "o",
+  test "scores possible win two moves down as a 2" do
+    current_board =  ["1", "o", "3",
+                      "4", "x", "o",
+                      "7", "x", "9"]
+
+    assert TicTacToe.Minimax.minimax(current_board, "x", true) == 1
+    assert TicTacToe.Minimax.minimax(current_board, "x", false) == -1
+  end
+
+  test "scores an unwinnable board as 0" do
+    current_board =  ["o", "2", "3",
+                      "x", "x", "o",
+                      "o", "8", "x"]
+
+    assert TicTacToe.Minimax.minimax(current_board, "x", true) == 0
+    assert TicTacToe.Minimax.minimax(current_board, "x", false) == 0
+  end
+
+  test "scores empty board as 0" do
+    current_board =  ["1", "2", "3",
+                      "4", "5", "6",
+                      "7", "8", "9"]
+
+    assert TicTacToe.Minimax.minimax(current_board, "x", true) == 0
+  end
+
+
+
+
+
+
+
+  test "gives possible_boards" do
+    current_board = ["1", "o", "3"]
+    assert TicTacToe.Minimax.possible_boards(current_board, "x") == [["x", "o", "3"],["1", "o", "x"]]
+  end
+
+  test "returns values of board" do
+    current_board = ["1", "o", "3",
                      "4", "x", "6",
-                     "7", "8", "9"]
-    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
-    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
-    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "9"
+                     "o", "8", "x"]
+    possible_boards = TicTacToe.Minimax.possible_boards(current_board, "x")
+    assert TicTacToe.Minimax.evaluate(possible_boards, current_board) == [{1, "1"}, {0, "3"}, {0, "4"}, {0, "6"}, {0, "8"}]
   end
 
-  test "current player blocks future opponent win" do
-    current_board = ["x", "2", "3",
-                     "4", "o", "6",
-                     "7", "8", "x"]
-    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
-    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
-    assert Enum.member?(["2", "3", "4", "6", "7", "8"], TicTacToe.Minimax.best_move(current_board, {player_1, player_2}))
-  end
-
-  test "blocks another fork attempt" do
-    current_board = ["x", "2", "3",
+  test "winning board is terminal" do
+    current_board = ["x", "o", "3",
                      "4", "x", "6",
-                     "7", "8", "o"]
-    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
-    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
-    assert Enum.member?(["3", "7"], TicTacToe.Minimax.best_move(current_board, {player_1, player_2}))
+                     "o", "8", "x"]
+    assert TicTacToe.Minimax.terminal?(current_board)
   end
 
-  test "blocks another alternative fork attempt" do
-    current_board = ["1", "2", "3",
-                     "4", "5", "x",
-                     "7", "x", "o"]
-    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
-    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
-    assert Enum.member?(["5", "4", "2"], TicTacToe.Minimax.best_move(current_board, {player_1, player_2}))
+  test "inplay board is not terminal" do
+    current_board = ["1", "o", "3",
+                     "4", "x", "6",
+                     "o", "9", "x"]
+    refute TicTacToe.Minimax.terminal?(current_board)
   end
 
-  test "blocks player while also trying to win" do
-    current_board = ["x", "2", "3",
-                     "o", "5", "x",
-                     "o", "x", "o"]
-    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
-    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
-    assert Enum.member?(["5", "2"], TicTacToe.Minimax.best_move(current_board, {player_1, player_2}))
+  test "returns best move when terminal due to win" do
+    current_board =   ["x", "o", "3",
+                      "4", "x", "6",
+                      "o", "8", "9"]
+    assert TicTacToe.Minimax.best_move(current_board, "x") == "9"
+    current_board =   ["1", "o", "3",
+                      "4", "x", "o",
+                      "o", "8", "x"]
+    assert TicTacToe.Minimax.best_move(current_board, "x") == "1"
   end
 
-  test "computer ends game with a draw" do
-    current_board = ["x", "o", "3",
-                     "o", "x", "x",
-                     "o", "x", "o"]
-    player_1 = TicTacToe.HumanPlayer.build("Computer", "o")
-    player_2 = TicTacToe.HumanPlayer.build("gary", "x")
-    assert TicTacToe.Minimax.best_move(current_board, {player_1, player_2}) == "3"
+  test "returns best move for blocking win of opponent" do
+    current_board =   ["1", "2", "3",
+                      "4", "x", "o",
+                      "o", "8", "x"]
+    assert TicTacToe.Minimax.best_move(current_board, "o") == "1"
+    current_board =   ["1", "2", "3",
+                      "4", "x", "o",
+                      "x", "o", "9"]
+    assert TicTacToe.Minimax.best_move(current_board, "o") == "3"
   end
-
-  test "knows when last turn" do
-    current_board = ["x", "o", "3",
-                     "o", "x", "x",
-                     "o", "x", "o"]
-    assert TicTacToe.Minimax.last_turn?(current_board) == true 
-  end
-
 end

@@ -1,12 +1,41 @@
 defmodule TicTacToe.Messager do
 
   def format_board(current_board) do
-    Enum.chunk(current_board, 3)
+    Enum.chunk(colour_board(current_board), 3)
     |> Enum.map(fn(row) ->
       Enum.join(row, " ")
     end)
     |> Enum.join("\n")
     |> String.pad_leading(20, "\n")
+  end
+
+  def colour_board(current_board) do
+    Enum.map(current_board, fn(cell) ->
+      colour_marker(cell)
+    end)
+  end
+
+  def cyan do
+    IO.ANSI.cyan()
+  end
+
+  def yellow do
+    IO.ANSI.yellow()
+  end
+
+  def reset do
+    IO.ANSI.reset()
+  end
+
+  def colour_marker(marker) do
+    cond do
+      marker == "x" ->
+        "#{cyan}x#{reset}"
+      marker == "o" ->
+        "#{yellow}o#{reset}"
+      :else ->
+        marker
+      end
   end
 
   def welcome_introduction do
@@ -30,7 +59,7 @@ defmodule TicTacToe.Messager do
   end
 
   def turn_input_request(player_name, marker) do
-    "\nIt's #{player_name}'s turn with the marker #{marker}, \ninput the number of the position that you would like to mark: \n"
+    "\nIt's #{player_name}'s turn with the marker #{colour_marker(marker)}, \ninput the number of the position that you would like to mark: \n"
   end
 
   def unavailable_cell do

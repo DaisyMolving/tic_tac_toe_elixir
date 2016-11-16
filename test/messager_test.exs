@@ -29,7 +29,7 @@ defmodule TicTacToeTest.Messager do
   end
 
   test "returns request for turn" do
-    assert TicTacToe.Messager.turn_input_request("Gary", "x") =~ "Gary's turn with the marker x"
+    assert TicTacToe.Messager.turn_input_request("Gary", "x") =~ "Gary's turn"
   end
 
   test "returns message for unavailable cell" do

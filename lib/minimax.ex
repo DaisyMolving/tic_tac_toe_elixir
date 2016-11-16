@@ -1,89 +1,105 @@
 defmodule TicTacToe.Minimax do
 
-  def best_move(current_board, {player_1, player_2}) do
-    result1 = minimax(current_board, {player_1, player_2})
-    result2 = minimax(current_board, {player_2, player_1})
+  def best_move(current_board, current_marker) do
+    Enum.map(available_cells(current_board), fn(cell) ->
+      possible_board = ghost_mark(cell, current_marker, current_board)
+      score = minimax(possible_board, opponent(current_marker), false)
+      {score, cell}
+    end) |> Enum.max |> elem(1)
+  end
+
+  def minimax(current_board, current_marker, maximising_player) do
     cond do
-      last_turn?(current_board) ->
-        place_last_marker(current_board)
-      Enum.member?(result1, "one") ->
-        return_cell_number(minimax(current_board, {player_1, player_2}), "one")
-      Enum.member?(result2, "one") ->
-      return_cell_number(minimax(current_board, {player_2, player_1}), "one")
-      :else ->
-        possibilities = Enum.map(return_possible_moves(current_board, player_1.marker), fn(possible_move) ->
-          best_move(possible_move, {player_2, player_1})
+      terminal?(current_board) ->
+        score(current_board, maximising_player)
+      maximising_player ->
+        Enum.map(possible_boards(current_board, current_marker), fn(possible_board) ->
+          minimax(possible_board, opponent(current_marker), !maximising_player)
         end)
-        Enum.find(possibilities, fn(x) -> is_binary(x) end)
+      |> Enum.max
+      :else ->
+        Enum.map(possible_boards(current_board, current_marker), fn(possible_board) ->
+          minimax(possible_board, opponent(current_marker), !maximising_player)
+        end)
+      |> Enum.min
     end
   end
 
-  def place_last_marker(current_board) do
-    Enum.find(current_board, fn(x) ->
-      String.match?(x, ~r/^[1-9]$/)
+  def opponent("x"), do: "o"
+  def opponent("o"), do: "x"
+
+  def terminal?(current_board) do
+    terminal_draw(current_board) or terminal_win(current_board)
+  end
+
+  def terminal_draw(current_board) do
+    TicTacToe.Board.draw?(current_board)
+  end
+
+  def terminal_win(current_board) do
+    TicTacToe.Board.win?(current_board)
+  end
+
+  def terminal_cell(current_board, current_marker) do
+    current_board
+    |> possible_boards(current_marker)
+    |> evaluate(current_board)
+    |> Enum.max
+    |> elem(1)
+  end
+
+  def values(current_board, current_marker) do
+    possible_boards(current_board, current_marker)
+    |> evaluate(current_board)
+  end
+
+  def score(board, maximising_player) do
+    cond do
+      TicTacToe.Board.win?(board) and maximising_player ->
+        -1
+      TicTacToe.Board.win?(board) and !maximising_player ->
+        1
+      :else ->
+        0
+    end
+  end
+
+  def evaluate(possible_boards, current_board) do
+    Enum.map(possible_boards, fn(possible_board) ->
+      if TicTacToe.Board.win?(possible_board) do
+        {1, changed_cell(current_board, possible_board)}
+      else
+        {0, changed_cell(current_board, possible_board)}
+      end
     end)
   end
 
-  def last_turn?(current_board) do
-    Enum.partition(current_board, fn(x) ->
-      String.match?(x, ~r/^[1-9]$/)
+  def possible_boards(current_board, current_marker) do
+    Enum.map(available_cells(current_board), fn(cell) ->
+      ghost_mark(cell, current_marker, current_board)
+    end)
+  end
+
+  def changed_cell(current_board, possible_board) do
+    comparisons = Enum.zip(current_board, possible_board)
+    Enum.find(comparisons, fn({current_cell, possible_cell}) ->
+      current_cell != possible_cell
     end)
     |> elem(0)
-    |> Enum.count == 1
   end
 
-  def minimax(current_board, {player_1, _player_2}) do 
-    return_possible_moves(current_board, player_1.marker)
-    |> mark_minimax_values(current_board)
+  def ghost_mark(cell, current_marker, current_board) do
+    List.replace_at(current_board, String.to_integer(cell) - 1, current_marker)
   end
 
-  def return_possible_moves(current_board, marker) do
-    return_possible_moves([], current_board, current_board, marker)
-  end
-
-  def return_possible_moves(possible_boards, [], _board, _marker), do: possible_boards
-  def return_possible_moves(possible_boards, [head | tail], current_board, marker) do
-    if unmarked?(head) do
-      List.insert_at(possible_boards, -1, ghost_mark(head, marker, current_board))
-      |> return_possible_moves(tail, current_board, marker)
-    else
-      return_possible_moves(possible_boards, tail, current_board, marker)
-    end
-  end
-
-  defp mark_minimax_values([], current_board), do: current_board
-  defp mark_minimax_values([head | tail], current_board) do
-      case TicTacToe.Board.win?(head) do
-      true ->
-          mark_minimax_values(tail, List.replace_at(current_board, first_free_cell_index(current_board), "one"))
-      false ->
-        mark_minimax_values(tail, List.replace_at(current_board, first_free_cell_index(current_board), "zero"))
-    end
-  end
-
-  defp first_free_cell_index(current_board) do
-    Enum.find_index(current_board, fn(x) ->
-      String.match?(x, ~r/^[1-9]$/)
+  def available_cells(current_board) do
+    Enum.filter(current_board, fn(cell) ->
+      unmarked?(cell)
     end)
   end
 
-  defp unmarked?(cell) do
+  def unmarked?(cell) do
     String.match?(cell, ~r/^[1-9]$/)
-  end
-
-  defp ghost_mark(cell, marker, current_board) do
-    List.replace_at(current_board, get_index(current_board, cell), marker) 
-  end
-
-  defp get_index(current_board, cell_contents) do
-    Enum.find_index(current_board, fn(x) ->
-      x == cell_contents
-    end)
-  end
-
-  defp return_cell_number(current_board, win_or_lose) do
-    Enum.find_index(current_board, fn(x) -> x == win_or_lose end) + 1
-    |> Integer.to_string
   end
 
 end
