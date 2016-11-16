@@ -30,26 +30,26 @@ defmodule TicTacToe.Game do
   end
 
   def build_human_human_game do
-    player_1 = build_human_player("Player 1", "\e[36mx\e[0m")
-    player_2 = build_human_player("Player 2", "\e[33mo\e[0m")
+    player_1 = build_human_player("Player 1", "x")
+    player_2 = build_human_player("Player 2", "o")
     {player_1, player_2}
   end
 
   def build_human_computer_game do
-    player_1 = build_human_player("Human", "\e[36mx\e[0m")
-    player_2 = ComputerPlayer.build("Computer", "\e[33mo\e[0m")
+    player_1 = build_human_player("Human", "x")
+    player_2 = ComputerPlayer.build("Computer", "o")
     {player_1, player_2}
   end
 
   def build_computer_human_game do
-    player_1 = ComputerPlayer.build("Computer", "\e[33mo\e[0m")
-    player_2 = build_human_player("Human", "\e[36mx\e[0m")
+    player_1 = ComputerPlayer.build("Computer", "o")
+    player_2 = build_human_player("Human", "x")
     {player_1, player_2}
   end
 
   def build_computer_computer_game do
-    player_1 = ComputerPlayer.build("Computer 1", "\e[36mx\e[0m")
-    player_2 = ComputerPlayer.build("Computer 2", "\e[33mo\e[0m")
+    player_1 = ComputerPlayer.build("Computer 1", "x")
+    player_2 = ComputerPlayer.build("Computer 2", "o")
     {player_1, player_2}
   end
 
@@ -116,7 +116,7 @@ defmodule TicTacToe.Game do
   end
 
   def computer_mark_cell(current_board, {player_1, player_2}) do
-    ComputerPlayer.computer_move(current_board, {player_1, player_2})
+    ComputerPlayer.computer_move(current_board, player_1)
     |> Board.mark_cell(player_1.marker, current_board)
     |> take_turn({player_2, player_1})
   end

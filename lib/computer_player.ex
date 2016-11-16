@@ -6,9 +6,9 @@ defmodule TicTacToe.ComputerPlayer do
     %TicTacToe.HumanPlayer{name: name, marker: marker}
   end
 
-  def computer_move(current_board, {player_1, player_2}) do
+  def computer_move(current_board, player_1) do
     :timer.sleep(1000)
-    TicTacToe.Minimax.best_move(current_board, {player_1, player_2})
+    TicTacToe.Minimax.best_move(current_board, player_1.marker)
   end
 
   def update_score(name, marker, updated_score) do
