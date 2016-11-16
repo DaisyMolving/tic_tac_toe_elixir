@@ -2,14 +2,38 @@ defmodule TicTacToe.Game do
   alias TicTacToe.{Board, HumanPlayer, ComputerPlayer, Validator, CliDisplay, Messager}
 
   def play_tic_tac_toe do
-    welcome_players
-    {player_1, player_2} = decide_game_type
-    start_new_game({player_1, player_2})
+    start_new_game(%{})
   end
 
-  def start_new_game({player_1, player_2}) do
+  def start_new_game(player_scores) do
+    welcome_players
+    {player_1, player_2} = decide_game_type
     current_board = Board.create_new_board
-    take_turn(current_board, {player_1, player_2})
+    player_scores = add_player_scores(player_scores, player_1, player_2)
+    take_turn(current_board, {player_1, player_2}, player_scores)
+  end
+
+  def add_player_scores(player_scores, player_1, player_2) do
+    cond do
+      !Map.has_key?(player_scores, player_1.name) ->
+        player_scores = Map.put(player_scores, player_1.name, 0)
+        add_player_scores(player_scores, player_2, player_1)
+      !Map.has_key?(player_scores, player_2.name) ->
+        player_scores = Map.put(player_scores, player_2.name, 0)
+        add_player_scores(player_scores, player_2, player_1)
+      :else ->
+        player_scores
+    end
+  end
+
+  def decide_to_play_again({player_1, player_2}, player_scores) do
+    if play_again? == "yes" do
+      welcome_players
+      start_new_game(player_scores)
+    else
+      state_final_score(player_scores)
+      :gameover
+    end
   end
 
   def welcome_players do
@@ -66,31 +90,23 @@ defmodule TicTacToe.Game do
     |> CliDisplay.write
   end
 
-  def take_turn(current_board, {player_1, player_2}) do
+  def take_turn(current_board, {player_1, player_2}, player_scores) do
     case check_for_win_or_draw(current_board, player_2.name) do
       :continue ->
-        mark_board(current_board, {player_1, player_2})
+        mark_board(current_board, {player_1, player_2}, player_scores)
       :winner ->
-        decide_to_play_again({player_1, award_point(player_2)})
+        #update add 1 to player 2 score (player 2 is always the winner)
+        decide_to_play_again({player_1, player_2}, player_scores)
       :draw ->
-        decide_to_play_again({player_1, player_2})
+        decide_to_play_again({player_1, player_2}, player_scores)
     end
   end
 
-  def decide_to_play_again({player_1, player_2}) do
-    if play_again? == "yes" do
-      welcome_players
-      start_new_game({player_1, player_2})
-    else
-      state_final_score({player_1, player_2})
-      :gameover
-    end
+  def state_final_score(player_scores) do
+    Map.each(player_scores, fn{player, score} ->
+      CliDisplay.write("#{player}: #{score}")
+    end)
   end
-
-  def state_final_score({player_1, player_2}) do
-    CliDisplay.write(Messager.final_score_message({player_1, player_2}))
-  end
-
 
   defp game_type? do
     Messager.game_type_request
@@ -103,22 +119,22 @@ defmodule TicTacToe.Game do
     |> CliDisplay.get_stripped_input
   end
 
-  defp mark_board(current_board, {player_1, player_2}) do
+  defp mark_board(current_board, {player_1, player_2}, player_scores) do
     display_board(current_board)
     if player_1.name =~ "Computer" do
       Messager.turn_input_request(player_1.name, player_1.marker)
       |> CliDisplay.write
-      computer_mark_cell(current_board, {player_1, player_2})
+      computer_mark_cell(current_board, {player_1, player_2}, player_scores)
     else
       human_choose_cell(player_1)
-      |> mark_cell_if_available(current_board, {player_1, player_2})
+      |> mark_cell_if_available(current_board, {player_1, player_2}, player_scores)
     end
   end
 
   def computer_mark_cell(current_board, {player_1, player_2}) do
     ComputerPlayer.computer_move(current_board, {player_1, player_2})
     |> Board.mark_cell(player_1.marker, current_board)
-    |> take_turn({player_2, player_1})
+    |> take_turn({player_2, player_1}, player_scores)
   end
 
   defp check_for_win_or_draw(current_board, winning_player) do
@@ -139,13 +155,6 @@ defmodule TicTacToe.Game do
     end
   end
 
-  def award_point(winning_player) do
-    if winning_player.name =~ "Computer" do
-      ComputerPlayer.update_score(winning_player.name, winning_player.marker, winning_player.score + 1)
-    else
-      HumanPlayer.update_score(winning_player.name, winning_player.marker, winning_player.score + 1)
-    end
-  end
 
   defp mark_cell_if_available(chosen_cell, current_board, {player_1, player_2}) do
     case Board.available_cell?(chosen_cell, current_board) do
