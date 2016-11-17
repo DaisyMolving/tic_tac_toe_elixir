@@ -65,11 +65,11 @@ defmodule TicTacToeTest.Game do
     end) =~ "Gary: 1"
   end
 
-  # test "keeps score for multiple running games" do
-  #   assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nyes\na\nGary\nBarryn8\n1\n2\n5\n4\n9\nI'm done", fn ->
-  #     TicTacToe.Game.play_tic_tac_toe
-  #   end) =~ "Gary: 2"
-  # end
+  test "keeps score for multiple running games" do
+    assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nyes\na\nGary\nBarryn8\n1\n2\n5\n4\n9\nI'm done", fn ->
+      TicTacToe.Game.play_tic_tac_toe
+    end) =~ "Gary: 2"
+  end
 
   test "adds player scores for new players" do
     player_scores = %{}
