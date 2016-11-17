@@ -26,7 +26,7 @@ defmodule TicTacToe.Game do
     end
   end
 
-  def decide_to_play_again({player_1, player_2}, player_scores) do
+  def decide_to_play_again(player_scores) do
     if play_again? == "yes" do
       welcome_players
       start_new_game(player_scores)
@@ -95,15 +95,19 @@ defmodule TicTacToe.Game do
       :continue ->
         mark_board(current_board, {player_1, player_2}, player_scores)
       :winner ->
-        #update add 1 to player 2 score (player 2 is always the winner)
-        decide_to_play_again({player_1, player_2}, player_scores)
+        update_player_score(player_scores, player_2)
+        |> decide_to_play_again
       :draw ->
-        decide_to_play_again({player_1, player_2}, player_scores)
+        decide_to_play_again(player_scores)
     end
   end
 
+  def update_player_score(player_scores, winning_player) do
+    Map.update(player_scores, winning_player.name, 1, &(&1 + 1))
+  end
+
   def state_final_score(player_scores) do
-    Map.each(player_scores, fn{player, score} ->
+    Enum.each(player_scores, fn{player, score} ->
       CliDisplay.write("#{player}: #{score}")
     end)
   end
@@ -131,7 +135,7 @@ defmodule TicTacToe.Game do
     end
   end
 
-  def computer_mark_cell(current_board, {player_1, player_2}) do
+  def computer_mark_cell(current_board, {player_1, player_2}, player_scores) do
     ComputerPlayer.computer_move(current_board, {player_1, player_2})
     |> Board.mark_cell(player_1.marker, current_board)
     |> take_turn({player_2, player_1}, player_scores)
@@ -156,14 +160,14 @@ defmodule TicTacToe.Game do
   end
 
 
-  defp mark_cell_if_available(chosen_cell, current_board, {player_1, player_2}) do
+  defp mark_cell_if_available(chosen_cell, current_board, {player_1, player_2}, player_scores) do
     case Board.available_cell?(chosen_cell, current_board) do
       true ->
         chosen_cell
         |> Board.mark_cell(player_1.marker, current_board)
-        |> take_turn({player_2, player_1})
+        |> take_turn({player_2, player_1}, player_scores)
       false ->
-        take_turn(current_board, {player_1, player_2})
+        take_turn(current_board, {player_1, player_2}, player_scores)
     end
   end
 

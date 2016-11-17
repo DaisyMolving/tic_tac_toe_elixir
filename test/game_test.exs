@@ -31,7 +31,7 @@ defmodule TicTacToeTest.Game do
     player_1 = TicTacToe.HumanPlayer.build("gary", "x")
     player_2 = TicTacToe.HumanPlayer.build("barry", "o")
     assert capture_io("1\n2\n5\n4\n9\nn", fn ->
-      TicTacToe.Game.take_turn(current_board, {player_1, player_2}) 
+      TicTacToe.Game.take_turn(current_board, {player_1, player_2}, %{}) 
     end) =~ "Gary won"
   end
 
@@ -48,10 +48,8 @@ defmodule TicTacToeTest.Game do
   end
 
   test "players can play again" do
-    player_1 = TicTacToe.HumanPlayer.build("gary", "x")
-    player_2 = TicTacToe.HumanPlayer.build("barry", "o")
     assert capture_io("yes\na\nDaisy\nAlex\n1\n2\n5\n4\n9\ndone", fn -> 
-     TicTacToe.Game.decide_to_play_again({player_1, player_2})
+     TicTacToe.Game.decide_to_play_again(%{})
     end) =~ "Welcome to Tic Tac Toe"
   end
 
@@ -61,11 +59,11 @@ defmodule TicTacToeTest.Game do
     end) =~ "Computer 1's turn"
   end
 
-  # test "shows score when one game ends" do
-  #   assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nI'm done", fn ->
-  #     TicTacToe.Game.play_tic_tac_toe
-  #   end) =~ "Gary: 1"
-  # end
+  test "shows score when one game ends" do
+    assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nI'm done", fn ->
+      TicTacToe.Game.play_tic_tac_toe
+    end) =~ "Gary: 1"
+  end
 
   # test "keeps score for multiple running games" do
   #   assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nyes\na\nGary\nBarryn8\n1\n2\n5\n4\n9\nI'm done", fn ->
