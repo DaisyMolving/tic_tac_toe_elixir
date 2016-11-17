@@ -31,7 +31,7 @@ defmodule TicTacToeTest.Game do
     player_1 = TicTacToe.HumanPlayer.build("gary", "x")
     player_2 = TicTacToe.HumanPlayer.build("barry", "o")
     assert capture_io("1\n2\n5\n4\n9\nn", fn ->
-      TicTacToe.Game.take_turn(current_board, {player_1, player_2}) 
+      TicTacToe.Game.take_turn(current_board, {player_1, player_2}, %{}) 
     end) =~ "Gary won"
   end
 
@@ -48,10 +48,8 @@ defmodule TicTacToeTest.Game do
   end
 
   test "players can play again" do
-    player_1 = TicTacToe.HumanPlayer.build("gary", "x")
-    player_2 = TicTacToe.HumanPlayer.build("barry", "o")
-    assert capture_io("yes\n1\n2\n5\n4\n9\ndone", fn -> 
-     TicTacToe.Game.decide_to_play_again({player_1, player_2})
+    assert capture_io("yes\na\nDaisy\nAlex\n1\n2\n5\n4\n9\ndone", fn -> 
+     TicTacToe.Game.decide_to_play_again(%{})
     end) =~ "Welcome to Tic Tac Toe"
   end
 
@@ -68,9 +66,29 @@ defmodule TicTacToeTest.Game do
   end
 
   test "keeps score for multiple running games" do
-    assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nyes\n8\n1\n2\n5\n4\n9\nI'm done", fn ->
+    assert capture_io("a\nGary\nBarry\n1\n2\n5\n4\n9\nyes\na\nGary\nBarryn8\n1\n2\n5\n4\n9\nI'm done", fn ->
       TicTacToe.Game.play_tic_tac_toe
     end) =~ "Gary: 2"
+  end
+
+  test "adds player scores for new players" do
+    player_scores = %{}
+    player_1 = TicTacToe.HumanPlayer.build("gary", "x")
+    player_2 = TicTacToe.HumanPlayer.build("barry", "o")
+    assert TicTacToe.Game.add_player_scores(player_scores, player_1, player_2) == %{"Gary" => 0, "Barry" => 0}
+
+  end
+
+  test "retains player scores for continuing players" do
+    player_scores = %{"Gary" => 1}
+    player_1 = TicTacToe.HumanPlayer.build("gary", "x")
+    player_2 = TicTacToe.HumanPlayer.build("barry", "o")
+    assert TicTacToe.Game.add_player_scores(player_scores, player_1, player_2) == %{"Gary" => 1, "Barry" => 0}
+
+    player_scores = %{"Barry" => 1}
+    player_1 = TicTacToe.HumanPlayer.build("gary", "x")
+    player_2 = TicTacToe.HumanPlayer.build("barry", "o")
+    assert TicTacToe.Game.add_player_scores(player_scores, player_1, player_2) == %{"Gary" => 0, "Barry" => 1}
   end
 
 end
